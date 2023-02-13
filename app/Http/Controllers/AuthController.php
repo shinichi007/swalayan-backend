@@ -27,8 +27,10 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:5'
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required_with:password|same:password|min:6'
         ]);
 
         if($validator->fails()){
@@ -44,11 +46,24 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()
-            ->json(['data' => $user,'access_token' => $token, 'token_type' => 'Bearer', ]);
+            ->json([
+                'data' => $user,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ]);
     }
 
     public function do_login(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
         if (!Auth::attempt($request->only('email', 'password')))
         {
             return response()
