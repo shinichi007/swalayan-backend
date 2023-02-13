@@ -5,7 +5,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'login']);
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/customers', [CustomerController::class, 'index']);
