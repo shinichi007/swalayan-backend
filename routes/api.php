@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', function(Request $request) {
         return auth()->user();
     });
+
+    Route::post('/address', [AddressController::class, 'do_login']);
 
     // API route for logout user
     Route::post('/logout', [AuthController::class, 'logout']);
