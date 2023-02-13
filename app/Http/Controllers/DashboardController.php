@@ -18,4 +18,12 @@ class DashboardController extends Controller
             'countPending' => Customer::countPending()
         ]);
     }
+
+    public function logs()
+    {
+        return view('logs', [
+            'title' => 'Logs',
+            'countPending' => Customer::countPending()
+        ]);
+    }
 }

@@ -123,6 +123,13 @@
                                 <span class="nav-main-link-name">User</span>
                             </a>
                         </li>
+                        <li class="nav-main-item">
+                            <a class="nav-main-link {{ $title === 'Log' }}"
+                                href="/logs">
+                                <i class="nav-main-link-icon fa fa-gears"></i>
+                                <span class="nav-main-link-name">Log</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

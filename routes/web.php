@@ -27,3 +27,4 @@ Route::get('/customer/{id}', [CustomerController::class, 'detailCustomer']);
 Route::get('/customer/edit/{id}', [CustomerController::class, 'editCustomer']);
 Route::get('/profile', [ProfileController::class, 'index']);
 Route::get('/users', [UserController::class, 'index']);
+Route::get('/logs', [DashboardController::class, 'logs']);
