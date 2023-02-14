@@ -17,13 +17,13 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->unsignedInteger('user_id');
             $table->string('avatar')->nullable();
-            $table->string('status',30)->index();
+            $table->enum('status',['pending','regular','member'])->default('pending')->nullable();
             $table->integer('code')->unique()->index();
             $table->integer('point');
             $table->integer('nik')->index();
             $table->string('ktp_name');
             $table->string('ktp_img');
-            $table->string('ktp_gender',1);
+            $table->enum('ktp_gender',['f','m'])->nullable();
             $table->date('ktp_dob');
             $table->text('ktp_address');
             $table->timestamps();

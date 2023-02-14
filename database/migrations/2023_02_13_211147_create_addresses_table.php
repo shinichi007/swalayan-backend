@@ -16,13 +16,13 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->string('type',50);
+            $table->enum('type',['rumah','kantor','tetangga'])->default('rumah')->nullable();
             $table->string('name',255);
             $table->boolean('default');
-            $table->string('phone',15);
+            $table->string('phone',50);
             $table->text('address');
             $table->string('city',50);
-            $table->integer('zipcode');
+            $table->string('zipcode');
             $table->timestamps();
         });
     }
