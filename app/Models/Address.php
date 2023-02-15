@@ -11,6 +11,14 @@ class Address extends Model implements Auditable
 {
     use HasFactory, AuditableTrait;
 
+    protected $table = 'addresses';
+    protected $fillable = ['user_id','type', 'name', 'default', 'phone', 'address', 'city', 'zipcode'];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
     /**
      * Scope a query to only include active pages.
      *

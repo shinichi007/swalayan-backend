@@ -14,7 +14,6 @@ class MemberFactory extends Factory
     public function definition()
     {
         return [
-            'avatar' => $this->faker->imageUrl(),
             'user_id' => $this->faker->randomDigitNotZero(),
             'status' => 'pending',
             'code' => $this->faker->randomNumber(),
