@@ -29,4 +29,12 @@ class Member extends Model implements Auditable
     {
         return $this->belongsTo(User::class,'user_id');
     }
+
+    public static function generate_code($uid){
+        $code = $uid.random_int(100000, 999999);
+        if(Member::where('code',$code)->count()){
+            $code = Member::generate_code($uid);
+        }
+        return $code;
+    }
 }

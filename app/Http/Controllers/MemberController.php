@@ -44,7 +44,7 @@ class MemberController extends Controller
             'status' => 'pending'
         ]);
         request()->validate([
-            'nik'           => 'required|string|min:16|max:17|unique:members',
+            'nik'           => 'required|string|min:1|max:17|unique:members',
             'ktp_name'      => 'required',
             'ktp_gender'    => 'required',
             'ktp_dob'       => 'required',
@@ -52,10 +52,13 @@ class MemberController extends Controller
         ]);
 
         try{
-            $filename = 'ktp_'.$uid.'.'.$request->ktp_photo->extension();
-            $request->ktp_photo->move(public_path('uploads/ktp'), $filename);
+            // $filename = 'ktp_'.$uid.'.'.$request->ktp_photo->extension();
+            // $request->ktp_photo->move(public_path('uploads/ktp'), $filename);
+            $filename = 'ktp_'.$uid.'.jpg';
             $request->request->add([
-                'ktp_img' => 'upload/ktp/'.$filename,
+                'ktp_img' => 'uploads/ktp/'.$filename,
+                'code'  => Member::generate_code($uid),
+                'point'  => 0
             ]);
 
             Member::create($request->all());
@@ -79,12 +82,35 @@ class MemberController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Member  $member
+     * @param  int  $member_id
      * @return \Illuminate\Http\Response
      */
-    public function show(Member $member)
+    public function show($member_id)
     {
-        //
+        try{
+            $member = Member::select(
+                'nik',
+                'status',
+                'ktp_name',
+                'ktp_gender',
+                'ktp_dob',
+                'ktp_address',
+                'user_id',)
+                ->where('id',$member_id)->firstOrFail();
+
+            $data = [
+                'message' => 'Show member Success',
+                'data' => $member,
+            ];
+        }
+        catch(\Exception $e){
+            $data = [
+                'message' => 'member Not Found',
+                'data' => [],
+            ];
+        }
+
+        return response()->json($data);
     }
 
     /**
@@ -108,15 +134,31 @@ class MemberController extends Controller
     public function update(Request $request, Member $member)
     {
         request()->validate([
-            'nik'           => 'required',
+            'nik'           => 'required|string|min:1|max:17|unique:members',
             'ktp_name'      => 'required',
-            'ktp_img'       => 'required',
             'ktp_gender'    => 'required',
             'ktp_dob'       => 'required',
             'ktp_address'   => 'required',
+            'code'          => 'required',
+            'point'         => 'required',
         ]);
 
-        $member->update($request->all());
+        try{
+            $member = $member->update($request->all());
+
+            $data = [
+                'message' => 'Update member success',
+                'data' => $member,
+            ];
+        }
+        catch(\Exception $e){
+            $data = [
+                'message' => $e->getMessage(),
+                'data' => [],
+            ];
+        }
+
+        return response()->json($data);
     }
 
     /**

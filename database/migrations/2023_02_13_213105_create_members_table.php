@@ -19,7 +19,7 @@ class CreateMembersTable extends Migration
             $table->enum('status',['pending','regular','member'])->default('pending')->nullable();
             $table->integer('code')->unique()->index();
             $table->integer('point');
-            $table->integer('nik')->index();
+            $table->string('nik')->unique()->index();
             $table->string('ktp_name');
             $table->string('ktp_img');
             $table->enum('ktp_gender',['f','m'])->nullable();
