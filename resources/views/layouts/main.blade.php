@@ -43,7 +43,7 @@
                     <div class="block-content tab-content overflow-hidden">
                         <div class="tab-pane pull-x fade fade-up show active" id="so-settings" role="tabpanel"
                             aria-labelledby="so-settings-tab" tabindex="0">
-                            <form action="be_pages_dashboard.html" method="POST" onsubmit="return false;">
+                            <form action="{{ url('/setting') }}" method="PUT" onsubmit="return false;">
                                 <div class="block mb-0">
                                     <div class="block-content block-content-sm block-content-full bg-body">
                                         <span class="text-uppercase fs-sm fw-bold">App</span>

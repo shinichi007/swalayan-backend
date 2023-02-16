@@ -42,4 +42,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class,'user_id');
+    }
+
+    /**
+     * Get the Addresses.
+     */
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

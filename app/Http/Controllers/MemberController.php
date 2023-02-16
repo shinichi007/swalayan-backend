@@ -87,19 +87,38 @@ class MemberController extends Controller
     public function show($member_id)
     {
         try{
-            $member = Member::select(
-                'nik',
-                'status',
-                'ktp_name',
-                'ktp_gender',
-                'ktp_dob',
-                'ktp_address',
-                'user_id',)
-                ->where('id',$member_id)->firstOrFail();
+            $member = Member::where('id',$member_id)->firstOrFail();
+
+            $user = $member->users;
+            $addresses = $user->addresses;
 
             $data = [
                 'message' => 'Show member Success',
-                'data' => $member,
+                'data' => [
+                    'user' => [
+                        'user_id' => $user->id,
+                        'name' => $user->name,
+                        'phone' => $user->phone,
+                        'email' => $user->email,
+                        'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
+                        'avatar' => "https://randomuser.me/api/portraits/men/26.jpg",
+                    ],
+                    'address' => $addresses,
+                    'member'  => [
+                        "member_id" => $member->id,
+                        "status" => $member->status,
+                        "code" => $member->code,
+                        "point" => $member->point,
+                        "data" => [
+                            "address" => $member->ktp_address,
+                            "nik" => $member->nik,
+                            "ktp" => $member->ktp_img,
+                            "ktp_name" => $member->ktp_name,
+                            "gender" => $member->ktp_gender == 'f' ? 'Wanita':'Laki - Laki',
+                            "dob" => $member->ktp_dob,
+                        ]
+                    ],
+                ],
             ];
         }
         catch(\Exception $e){
