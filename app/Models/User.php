@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function member()
     {
-        return $this->belongsTo(Member::class,'user_id');
+        return $this->hasOne(Member::class);
     }
 
     /**

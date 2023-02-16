@@ -95,14 +95,12 @@ class MemberController extends Controller
             $data = [
                 'message' => 'Show member Success',
                 'data' => [
-                    'user' => [
-                        'user_id' => $user->id,
-                        'name' => $user->name,
-                        'phone' => $user->phone,
-                        'email' => $user->email,
-                        'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
-                        'avatar' => "https://randomuser.me/api/portraits/men/26.jpg",
-                    ],
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'phone' => $user->phone,
+                    'email' => $user->email,
+                    'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
+                    'avatar' => "https://randomuser.me/api/portraits/men/26.jpg",
                     'address' => $addresses,
                     'member'  => [
                         "member_id" => $member->id,

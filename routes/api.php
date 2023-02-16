@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +24,7 @@ Route::post('/login', [AuthController::class, 'do_login']);
 
 //Protecting Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    // Route::get('/profile', function(Request $request) {
-    //     return auth()->user();
-    // });
 
-    // Route::resource('customer', MemberController::class);
     Route::get('/customer', [MemberController::class, 'index']);
     Route::post('/customer', [MemberController::class, 'store']);
     Route::put('/customer/{addressid}', [MemberController::class, 'update']);
@@ -40,8 +37,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/address/{addressid}', [AddressController::class, 'show']);
     Route::delete('/address/{addressid}', [AddressController::class, 'destroy']);
 
-    Route::get('/account', [UserController::class, 'index']);
+    Route::get('/me', [UserController::class, 'me']);
     Route::post('/account', [UserController::class, 'store']);
+    Route::post('/account/{accountid}/upload', [UserController::class, 'update_avatar']);
     Route::put('/account/{accountid}', [UserController::class, 'update']);
     Route::get('/account/{accountid}', [UserController::class, 'show']);
     Route::delete('/account/{accountid}', [UserController::class, 'destroy']);
