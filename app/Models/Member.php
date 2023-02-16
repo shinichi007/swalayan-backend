@@ -25,7 +25,7 @@ class Member extends Model implements Auditable
         'ktp_address'
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class,'user_id');
     }

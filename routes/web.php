@@ -19,12 +19,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AuthController::class, 'login']);
-Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/customers', [CustomerController::class, 'index']);
-Route::get('/customer/{id}', [CustomerController::class, 'detailCustomer']);
-Route::get('/customer/edit/{id}', [CustomerController::class, 'editCustomer']);
-Route::get('/profile', [ProfileController::class, 'index']);
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/logs', [DashboardController::class, 'logs']);
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/customers', [CustomerController::class, 'index']);
+    Route::get('/customer/{id}', [CustomerController::class, 'detailCustomer']);
+    Route::get('/customer/edit/{id}', [CustomerController::class, 'editCustomer']);
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/logs', [DashboardController::class, 'logs']);
+// });

@@ -1,18 +1,22 @@
 @extends('layouts.main')
 
 @section('main')
-   
+
 <main id="main-container">
     <div class="content">
         <div
             class="d-md-flex justify-content-md-between align-items-md-center py-3 pt-md-3 pb-md-0 text-center text-md-start">
             <div>
                 <h1 class="h3 mb-1">
-                    Beranda
+                    {{ $title }}
                 </h1>
                 <p class="fw-medium mb-0 text-muted">
-                    Selamat datang Admin! Anda memiliki <a class="fw-medium" href="/customers"> {{ $countPending  }} permintaan
-                        member baru</a>.
+                    Selamat datang Admin!
+                    Anda memiliki
+                    <a class="fw-medium" href="/customers">
+                        {{ $countPending  }} permintaan
+                        member baru
+                    </a>.
                 </p>
             </div>
         </div>
@@ -25,7 +29,7 @@
                         <div class="item rounded-3 bg-body mx-auto my-3">
                             <i class="fa fa-users fa-lg text-primary"></i>
                         </div>
-                        <div class="fs-1 fw-bold"><?=$countCustomer?></div>
+                        <div class="fs-1 fw-bold">{{ count($customers) }}</div>
                         <div class="text-muted mb-3">Customer</div>
                     </div>
                 </div>
@@ -36,7 +40,9 @@
                         <div class="item rounded-3 bg-body mx-auto my-3">
                             <i class="fa fa-user-friends fa-lg text-primary"></i>
                         </div>
-                        <div class="fs-1 fw-bold"><?=$countMember?></div>
+                        <div class="fs-1 fw-bold">
+                            {{ count($members) }}
+                        </div>
                         <div class="text-muted mb-3">Member</div>
                     </div>
                 </div>
@@ -80,18 +86,25 @@
                             </thead>
                             <tbody>
                                 @foreach ($customers->take(10) as $customer)
+
                                     <tr>
                                         <td>
-                                            <span class="fw-semibold"><?=$customer['data']['name']?></span>
+                                            <span class="fw-semibold">
+                                                {{ $customer->user['name'] }}
+                                            </span>
                                         </td>
                                         <td class="d-none d-xl-table-cell">
-                                            <span class="fs-sm text-muted"><?=$customer['data']['email']?></span>
+                                            <span class="fs-sm text-muted">
+                                                {{ $customer->user['email'] }}
+                                            </span>
                                         </td>
                                         <td>
-                                            <span class="fw-semibold text-warning"><?=$customer['data']['phone']?></span>
+                                            <span class="fw-semibold text-warning">
+                                                {{ $customer->user['phone'] }}
+                                            </span>
                                         </td>
                                         <td class="text-center text-nowrap fw-medium">
-                                            <a href="customer/{{ $customer["id"] }}">
+                                            <a href="{{ url('/customer/'.$customer['id']) }}">
                                                 Lihat
                                             </a>
                                         </td>
@@ -102,7 +115,7 @@
                     </div>
                     <div
                         class="block-content block-content-full block-content-sm bg-body-light fs-sm text-center">
-                        <a class="fw-medium" href="/customers">
+                        <a class="fw-medium" href="{{ url('/customers') }}">
                             Lihat Semua Customer
                             <i class="fa fa-arrow-right ms-1 opacity-25"></i>
                         </a>
@@ -137,19 +150,25 @@
                                 @foreach ($members->take(10) as $member)
                                 <tr>
                                     <td>
-                                        <span class="fw-semibold"><?=$member['data']['name']?></span>
+                                        <span class="fw-semibold">
+                                            {{ $member->user['name'] }}
+                                        </span>
                                     </td>
                                     <td class="d-none d-xl-table-cell">
-                                        <span class="fs-sm text-muted"><?=$member['data']['email']?></span>
+                                        <span class="fs-sm text-muted">
+                                            {{ $member->user['email'] }}
+                                        </span>
                                     </td>
                                     <td>
-                                        <span class="fw-semibold text-warning"><?=$member['data']['phone']?></span>
+                                        <span class="fw-semibold text-warning">
+                                            {{ $member->user['phone'] }}
+                                        </span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-end fw-medium">
-                                        <?=$member['member']['point']?>
+                                        {{ $member->user['point'] }}
                                     </td>
                                     <td class="text-center text-nowrap fw-medium">
-                                        <a href="customer/{{ $member["id"] }}">
+                                        <a href="{{ url('/customer/'.$member['id']) }}">
                                             Lihat
                                         </a>
                                     </td>
@@ -160,7 +179,7 @@
                     </div>
                     <div
                         class="block-content block-content-full block-content-sm bg-body-light fs-sm text-center">
-                        <a class="fw-medium" href="/customers">
+                        <a class="fw-medium" href="{{ url('/customers') }}">
                             Lihat Semua Member
                             <i class="fa fa-arrow-right ms-1 opacity-25"></i>
                         </a>

@@ -89,7 +89,7 @@ class MemberController extends Controller
         try{
             $member = Member::where('id',$member_id)->firstOrFail();
 
-            $user = $member->users;
+            $user = $member->user;
             $addresses = $user->addresses;
 
             $data = [

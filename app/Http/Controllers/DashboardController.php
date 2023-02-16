@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Customer;
+use App\Models\Member;
 
 use Illuminate\Http\Request;
 
@@ -11,11 +12,9 @@ class DashboardController extends Controller
     {
         return view('dashboard', [
             'title' => 'Beranda',
-            'customers' => Customer::regular(),
-            'members' => Customer::member(),
-            'countCustomer' => Customer::countCustomer(),
-            'countMember' => Customer::countMember(),
-            'countPending' => Customer::countPending()
+            'customers' => Member::where('status','regular')->orWhere('status','pending')->get(),
+            'members' => Member::where('status','member')->get(),
+            'countPending' => count(Member::where('status','pending')->get())
         ]);
     }
 
