@@ -45,6 +45,7 @@ class MemberController extends Controller
         ]);
         request()->validate([
             'nik'           => 'required|string|min:1|max:17|unique:members',
+            'ktp_photo'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'ktp_name'      => 'required',
             'ktp_gender'    => 'required',
             'ktp_dob'       => 'required',
@@ -52,11 +53,9 @@ class MemberController extends Controller
         ]);
 
         try{
-            // $filename = 'ktp_'.$uid.'.'.$request->ktp_photo->extension();
-            // $request->ktp_photo->move(public_path('uploads/ktp'), $filename);
-            $filename = 'ktp_'.$uid.'.jpg';
+            $image_path = $request->file('ktp_photo')->store('image', 'public');
             $request->request->add([
-                'ktp_img' => 'uploads/ktp/'.$filename,
+                'ktp_img' => $image_path,
                 'code'  => Member::generate_code($uid),
                 'point'  => 0
             ]);
