@@ -5,6 +5,7 @@ use App\Models\Customer;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -35,6 +36,7 @@ class UserController extends Controller
         ]);
 
         try{
+            $status_code = 200;
             $image_path = $request->file('profile_pic')->store('image', 'public');
             $request->request->add([
                 'avatar' => $image_path,
@@ -48,13 +50,14 @@ class UserController extends Controller
             ];
         }
         catch(\Exception $e){
+            $status_code = 400;
             $data = [
                 'message' => $e->getMessage(),
                 'data' => [],
             ];
         }
 
-        return response()->json($data);
+        return response()->json($data, $status_code);
 
     }
 
@@ -66,6 +69,7 @@ class UserController extends Controller
      */
     public function show($user_id)
     {
+        $status_code = 200;
         try{
             $user = User::where('id',$user_id)->firstOrFail();
 
@@ -92,9 +96,8 @@ class UserController extends Controller
                 $addresses = $user->addresses;
             }
 
+            $message = 'Show user Success';
             $data = [
-                'message' => 'Show user Success',
-                'data' => [
                     'user_id' => $user->id,
                     'name' => $user->name,
                     'role' => $user->role,
@@ -104,17 +107,21 @@ class UserController extends Controller
                     'avatar' => $user->avatar,
                     'address' => $addresses,
                     'member'  => $member,
-                ],
             ];
         }
         catch(\Exception $e){
-            $data = [
-                'message' => 'User Not Found',
-                'data' => [],
-            ];
+            $status_code = 404;
+            $message = 'User Not Found';
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
 /**
@@ -125,6 +132,7 @@ class UserController extends Controller
     public function me()
     {
         $user_id = Auth::id();
+        $status_code = 200;
         try{
             $user = User::where('id',$user_id)->firstOrFail();
 
@@ -151,29 +159,32 @@ class UserController extends Controller
                 $addresses = $user->addresses;
             }
 
+            $message = 'Show user Success';
             $data = [
-                'message' => 'Show user Success',
-                'data' => [
-                    'user_id' => $user->id,
-                    'role' => $user->role,
-                    'name' => $user->name,
-                    'phone' => $user->phone,
-                    'email' => $user->email,
-                    'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
-                    'avatar' => $user->avatar,
-                    'address' => $addresses,
-                    'member'  => $member,
-                ],
+                'user_id' => $user->id,
+                'role' => $user->role,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
+                'avatar' => $user->avatar,
+                'address' => $addresses,
+                'member'  => $member,
             ];
         }
         catch(\Exception $e){
-            $data = [
-                'message' => 'User Not Found',
-                'data' => [],
-            ];
+            $status_code = 404;
+            $data = [];
+            $message = 'User Not Found';
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
     /**
@@ -191,25 +202,31 @@ class UserController extends Controller
         ]);
 
         try{
+            $status_code = 200;
             $user = User::where('id',$user_id)->firstOrFail();
 
             $user->name = $request->name;
             $user->role = $request->role;
             $user->save();
 
-            $data = [
-                'message' => 'Update Success',
-                'data' => $user,
-            ];
+            $message = 'Update Success';
+            $data = $user;
         }
         catch(\Exception $e){
+            $status_code = 422;
             $data = [
                 'message' => $e->getMessage(),
                 'data' => [],
             ];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
         /**
@@ -226,6 +243,7 @@ class UserController extends Controller
         ]);
 
         try{
+            $status_code = 200;
             $image_path = $request->file('profile_pic')->store('image/user', 'public');
 
             $user = User::where('id',$user_id)->firstOrFail();
@@ -233,19 +251,22 @@ class UserController extends Controller
             $user->avatar = $image_path;
             $user->save();
 
-            $data = [
-                'message' => 'Upload profile Success',
-                'data' => $user,
-            ];
+            $message = 'Upload profile Success';
+            $data = $user;
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 422;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
     /**
@@ -257,26 +278,30 @@ class UserController extends Controller
     public function destroy($user_id)
     {
         try{
+            $status_code = 404;
             $user = User::where('id',$user_id);
 
             $message = 'User Not Found';
             if($user->count()){
+                $status_code = 200;
                 $user->delete();
                 $message = 'Delete User Success';
             }
 
-            $data = [
-                'message' => $message,
-                'data' => [],
-            ];
+            $data = [];
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 400;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 }
