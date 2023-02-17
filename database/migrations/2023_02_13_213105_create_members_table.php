@@ -23,7 +23,7 @@ class CreateMembersTable extends Migration
             $table->string('ktp_name');
             $table->string('ktp_img');
             $table->enum('ktp_gender',['f','m'])->nullable();
-            $table->date('ktp_dob');
+            $table->string('ktp_dob');
             $table->text('ktp_address');
             $table->timestamps();
         });

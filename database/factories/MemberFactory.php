@@ -22,7 +22,7 @@ class MemberFactory extends Factory
             'ktp_name' => $this->faker->titleMale(),
             'ktp_img' => $this->faker->imageUrl(),
             'ktp_gender' => 'f',
-            'ktp_dob' => $this->faker->date(),
+            'ktp_dob' => $this->faker->city().','.$this->faker->date(),
             'ktp_address' => $this->faker->address(),
         ];
     }

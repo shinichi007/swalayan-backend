@@ -58,7 +58,7 @@ class MemberController extends Controller
             $image_path = $request->file('ktp_photo')->store('image', 'public');
             $request->request->add([
                 'ktp_img' => $image_path,
-                'code'  => Member::generate_code($uid),
+                'code'  => null,
                 'point'  => 0
             ]);
 
