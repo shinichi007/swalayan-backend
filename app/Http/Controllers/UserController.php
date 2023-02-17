@@ -25,17 +25,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'profile_pic'   => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'name'          => 'required|string|max:255',
-            'role'          => 'required|string|max:10',
-            'phone'         => 'required|string|min:8|max:18|unique:users',
-            'email'         => 'required|string|email|max:255|unique:users',
-            'password'      => 'required|string|min:6',
-            'password_confirmation' => 'required_with:password|same:password|min:6'
-        ]);
-
         try{
+
+            request()->validate([
+                'profile_pic'   => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'name'          => 'required|string|max:255',
+                'role'          => 'required|string|max:10',
+                'phone'         => 'required|string|min:8|max:18|unique:users',
+                'email'         => 'required|string|email|max:255|unique:users',
+                'password'      => 'required|string|min:6',
+                'password_confirmation' => 'required_with:password|same:password|min:6'
+            ]);
+
             $status_code = 200;
             $image_path = $request->file('profile_pic')->store('image', 'public');
             $request->request->add([
@@ -44,20 +45,22 @@ class UserController extends Controller
 
             User::create($request->all());
 
-            $data = [
-                'message' => 'Create User Success',
-                'data' => User::latest()->get(),
-            ];
+            $message = 'Create User Success';
+            $data = User::latest()->get();
         }
         catch(\Exception $e){
             $status_code = 400;
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data, $status_code);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
 
     }
 
@@ -196,12 +199,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $user_id)
     {
-        request()->validate([
-            'name'      => 'required|string|max:255',
-            'role'      => 'required|string|max:10',
-        ]);
 
         try{
+            request()->validate([
+                'name'      => 'required|string|max:255',
+                'role'      => 'required|string|max:10',
+            ]);
+
             $status_code = 200;
             $user = User::where('id',$user_id)->firstOrFail();
 

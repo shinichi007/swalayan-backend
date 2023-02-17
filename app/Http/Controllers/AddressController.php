@@ -53,33 +53,38 @@ class AddressController extends Controller
     {
         $uid = Auth::id();
         $request->request->add(['user_id' => $uid]);
-        request()->validate([
-            'user_id'   => 'required',
-            'type'      => 'required',
-            'name'      => 'required',
-            'default'   => 'required',
-            'phone'     => 'required',
-            'address'   => 'required',
-            'city'      => 'required',
-            'zipcode'   => 'required',
-        ]);
 
         try{
+            request()->validate([
+                'user_id'   => 'required',
+                'type'      => 'required',
+                'name'      => 'required',
+                'default'   => 'required',
+                'phone'     => 'required',
+                'address'   => 'required',
+                'city'      => 'required',
+                'zipcode'   => 'required',
+            ]);
+
             Address::create($request->all());
 
-            $data = [
-                'message' => 'create address success',
-                'data' => Address::where('user_id',$uid)->get(),
-            ];
+            $status_code = 200;
+            $message = 'create address success';
+            $data = Address::where('user_id',$uid)->get();
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 400;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
     /**
@@ -102,19 +107,23 @@ class AddressController extends Controller
                 'zipcode as zip')
                 ->where('id',$address_id)->firstOrFail();
 
-            $data = [
-                'message' => 'Show Address Success',
-                'data' => $address,
-            ];
+            $status_code = 200;
+            $message = 'Show Address Success';
+            $data = $address;
         }
         catch(\Exception $e){
-            $data = [
-                'message' => 'Address Not Found',
-                'data' => [],
-            ];
+            $status_code = 404;
+            $message = 'Address Not Found';
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
     /**
@@ -137,32 +146,36 @@ class AddressController extends Controller
      */
     public function update(Request $request, Address $address)
     {
-        request()->validate([
-            'type'      => 'required',
-            'name'      => 'required',
-            'default'   => 'required',
-            'phone'     => 'required',
-            'address'   => 'required',
-            'city'      => 'required',
-            'zipcode'   => 'required',
-        ]);
-
         try{
+            request()->validate([
+                'type'      => 'required',
+                'name'      => 'required',
+                'default'   => 'required',
+                'phone'     => 'required',
+                'address'   => 'required',
+                'city'      => 'required',
+                'zipcode'   => 'required',
+            ]);
+
             $address->update($request->all());
 
-            $data = [
-                'message' => 'Update address success',
-                'data' => Address::where('user_id',Auth::id())->get(),
-            ];
+            $status_code = 200;
+            $message = 'Update address success';
+            $data = Address::where('user_id',Auth::id())->get();
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 400;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
     /**
@@ -176,24 +189,28 @@ class AddressController extends Controller
         try{
             $address = Address::where('id',$address_id);
 
+            $status_code=404;
             $message = 'Address Not Found';
             if($address->count()){
+                $status_code=200;
                 $address->delete();
                 $message = 'Delete address success';
             }
 
-            $data = [
-                'message' => $message,
-                'data' => Address::where('user_id',Auth::id())->get(),
-            ];
+            $data = Address::where('user_id',Auth::id())->get();
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 400;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 }

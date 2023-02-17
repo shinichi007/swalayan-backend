@@ -43,16 +43,18 @@ class MemberController extends Controller
             'user_id' => $uid,
             'status' => 'pending'
         ]);
-        request()->validate([
-            'nik'           => 'required|string|min:1|max:17|unique:members',
-            'ktp_photo'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'ktp_name'      => 'required',
-            'ktp_gender'    => 'required',
-            'ktp_dob'       => 'required',
-            'ktp_address'   => 'required',
-        ]);
 
         try{
+
+            request()->validate([
+                'nik'           => 'required|string|min:1|max:17|unique:members',
+                'ktp_photo'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'ktp_name'      => 'required',
+                'ktp_gender'    => 'required',
+                'ktp_dob'       => 'required',
+                'ktp_address'   => 'required',
+            ]);
+
             $image_path = $request->file('ktp_photo')->store('image', 'public');
             $request->request->add([
                 'ktp_img' => $image_path,
@@ -62,19 +64,23 @@ class MemberController extends Controller
 
             Member::create($request->all());
 
-            $data = [
-                'message' => 'Create Member Success',
-                'data' => Member::where('user_id',$uid)->get(),
-            ];
+            $status_code = 200;
+            $message = 'Create Member Success';
+            $data = Member::where('user_id',$uid)->get();
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 400;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
 
     }
 
@@ -92,41 +98,45 @@ class MemberController extends Controller
             $user = $member->user;
             $addresses = $user->addresses;
 
+            $status_code = 200;
+            $message = 'Show member Success';
             $data = [
-                'message' => 'Show member Success',
-                'data' => [
-                    'user_id' => $user->id,
-                    'name' => $user->name,
-                    'phone' => $user->phone,
-                    'email' => $user->email,
-                    'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
-                    'avatar' => "https://randomuser.me/api/portraits/men/26.jpg",
-                    'address' => $addresses,
-                    'member'  => [
-                        "member_id" => $member->id,
-                        "status" => $member->status,
-                        "code" => $member->code,
-                        "point" => $member->point,
-                        "data" => [
-                            "address" => $member->ktp_address,
-                            "nik" => $member->nik,
-                            "ktp" => $member->ktp_img,
-                            "ktp_name" => $member->ktp_name,
-                            "gender" => $member->ktp_gender == 'f' ? 'Wanita':'Laki - Laki',
-                            "dob" => $member->ktp_dob,
-                        ]
-                    ],
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
+                'avatar' => "https://randomuser.me/api/portraits/men/26.jpg",
+                'address' => $addresses,
+                'member'  => [
+                    "member_id" => $member->id,
+                    "status" => $member->status,
+                    "code" => $member->code,
+                    "point" => $member->point,
+                    "data" => [
+                        "address" => $member->ktp_address,
+                        "nik" => $member->nik,
+                        "ktp" => $member->ktp_img,
+                        "ktp_name" => $member->ktp_name,
+                        "gender" => $member->ktp_gender == 'f' ? 'Wanita':'Laki - Laki',
+                        "dob" => $member->ktp_dob,
+                    ]
                 ],
             ];
         }
         catch(\Exception $e){
-            $data = [
-                'message' => 'member Not Found',
-                'data' => [],
-            ];
+            $status_code = 404;
+            $message = 'member Not Found';
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
     /**
@@ -149,32 +159,35 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
-        request()->validate([
-            'nik'           => 'required|string|min:1|max:17|unique:members',
-            'ktp_name'      => 'required',
-            'ktp_gender'    => 'required',
-            'ktp_dob'       => 'required',
-            'ktp_address'   => 'required',
-            'code'          => 'required',
-            'point'         => 'required',
-        ]);
-
         try{
-            $member = $member->update($request->all());
+            request()->validate([
+                'nik'           => 'required|string|min:1|max:17|unique:members',
+                'ktp_name'      => 'required',
+                'ktp_gender'    => 'required',
+                'ktp_dob'       => 'required',
+                'ktp_address'   => 'required',
+                'code'          => 'required',
+                'point'         => 'required',
+            ]);
 
-            $data = [
-                'message' => 'Update member success',
-                'data' => $member,
-            ];
+            $member = $member->update($request->all());
+            $status_code = 200;
+            $message = 'Update member success';
+            $data = $member;
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 400;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 
     /**
@@ -188,24 +201,28 @@ class MemberController extends Controller
         try{
             $member = Member::where('id',$member_id);
 
+            $status_code = 404;
             $message = 'Member Not Found';
             if($member->count()){
+                $status_code = 200;
                 $member->delete();
                 $message = 'Delete Member Success';
             }
 
-            $data = [
-                'message' => $message,
-                'data' => Member::where('user_id',Auth::id())->get(),
-            ];
+            $data = Member::where('user_id',Auth::id())->get();
         }
         catch(\Exception $e){
-            $data = [
-                'message' => $e->getMessage(),
-                'data' => [],
-            ];
+            $status_code = 400;
+            $message = $e->getMessage();
+            $data = [];
         }
 
-        return response()->json($data);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
     }
 }
