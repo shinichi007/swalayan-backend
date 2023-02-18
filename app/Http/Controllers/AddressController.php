@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Stmt\TryCatch;
 
 class AddressController extends Controller
 {
@@ -40,7 +39,6 @@ class AddressController extends Controller
      */
     public function create()
     {
-        return 'a';
     }
 
     /**
@@ -65,6 +63,10 @@ class AddressController extends Controller
                 'city'      => 'required',
                 'zipcode'   => 'required',
             ]);
+
+            if($request->default){
+                Address::where('user_id',$uid)->where('default',true)->update(["default" => false]);
+            }
 
             Address::create($request->all());
 
@@ -156,6 +158,10 @@ class AddressController extends Controller
                 'city'      => 'required',
                 'zipcode'   => 'required',
             ]);
+
+            if($request->default){
+                Address::where('user_id',Auth::id())->where('default',true)->update(["default" => false]);
+            }
 
             $address->update($request->all());
 
