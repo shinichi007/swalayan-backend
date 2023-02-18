@@ -27,6 +27,59 @@ class AuthController extends Controller
         return view('forgot-password');
     }
 
+    public function do_forgotPassword(Request $request)
+    {
+        $status_code = 400;
+        try{
+            $validator = Validator::make($request->all(),[
+                'email'                 => 'required|string|email|max:255|unique:users',
+            ]);
+
+            if($validator->fails()){
+                return response()->json($validator->errors(), $status_code);
+            }
+
+            $user = User::create([
+                'name'      => $request->name,
+                'phone'     => $request->phone,
+                'email'     => $request->email,
+                'password'  => Hash::make($request->password)
+             ]);
+
+            $status_code = 200;
+            $message = 'Register Success';
+            $data = null;
+
+            $otp = random_int(100000,999999);
+            $exp_time = new DateTime('+5 minutes', new DateTimeZone('Asia/Jakarta'));
+            $expired_time = $exp_time->format('Y-m-d H:i:s');
+
+            userVerify::create([
+                'user_id'       => $user->id,
+                'otp'           => $otp,
+                'is_used'       => false,
+                'expired_time'  => $expired_time,
+            ]);
+
+            userVerify::sendMail($user->email, $otp, $expired_time);
+            $text_sms = 'Kode OTP Verifikasi : '.$otp.' berlaku sampai '.$expired_time;
+            userVerify::sendWA($user->phone, $text_sms);
+
+        }
+        catch(\Exception $e){
+            $data = null;
+            $message = $e->getMessage();
+        }
+
+        $respon = [
+            'status_code'   => $status_code,
+            'data'          => $data,
+            'message'       => $message,
+        ];
+
+        return response()->json($respon, $status_code);
+    }
+
     public function do_register(Request $request)
     {
         $status_code = 400;
@@ -131,7 +184,7 @@ class AuthController extends Controller
                 $data = null;
 
                 userVerify::sendMail($user->email, $otp, $expired_time);
-                $text_sms = 'This is your secret verification code: '.$otp.' Expired at '.$expired_time;
+                $text_sms = 'Kode OTP Verifikasi : '.$otp.' berlaku sampai '.$expired_time;
                 userVerify::sendWA($user->phone, $text_sms);
             }
         }
