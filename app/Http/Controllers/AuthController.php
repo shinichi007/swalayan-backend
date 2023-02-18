@@ -96,24 +96,27 @@ class AuthController extends Controller
                         ->json(['message' => 'Unauthorized'], 401);
                 }
 
-                $otp = random_int(100000,999999);
-                $expired_time = new DateTime('+5 minutes', new DateTimeZone('Asia/Jakarta'));
+                if( $otp_active = userVerify::where('user_id',$user->id)->active()->first()){
+                    $otp_active->is_used = true;
+                    $otp_active->save();
+                }
 
-                UserVerify::create([
-                    'user_id'       => Auth::id(),
+                $otp = random_int(100000,999999);
+                $exp_time = new DateTime('+5 minutes', new DateTimeZone('Asia/Jakarta'));
+                $expired_time = $exp_time->format('Y-m-d H:i:s');
+
+                userVerify::create([
+                    'user_id'       => $user->id,
                     'otp'           => $otp,
                     'is_used'       => false,
-                    'expired_time'  => $expired_time->format('Y-m-d H:i:s'),
+                    'expired_time'  => $expired_time,
                 ]);
 
-                Mail::send('emails.emailVerificationEmail', ['otp' => $otp, 'expired_time' => $expired_time->format('Y-m-d H:i:s')], function($message) use($request){
+
+                Mail::send('emails.emailVerificationEmail', ['otp' => $otp, 'expired_time' => $expired_time], function($message) use($request){
                     $message->to($request->email);
                     $message->subject('Email Verification Code');
                 });
-
-                // $user = User::where('email', $request['email'])->firstOrFail();
-
-                // $token = $user->createToken('auth_token')->plainTextToken;
 
                 $status_code = 200;
                 $message = "Login Success, Please Input OTP";
