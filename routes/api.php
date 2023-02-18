@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/me', [UserController::class, 'me']);
     Route::post('/account', [UserController::class, 'store']);
     Route::post('/account/{accountid}/upload', [UserController::class, 'update_avatar']);
+    Route::post('/account/{accountid}/password', [UserController::class, 'change_password']);
     Route::put('/account/{accountid}', [UserController::class, 'update']);
     Route::get('/account/{accountid}', [UserController::class, 'show']);
     Route::delete('/account/{accountid}', [UserController::class, 'destroy']);

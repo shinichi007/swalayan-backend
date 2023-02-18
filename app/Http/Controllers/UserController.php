@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -263,6 +264,56 @@ class UserController extends Controller
             $status_code = 422;
             $message = $e->getMessage();
             $data = [];
+        }
+
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function change_password(Request $request, $user_id)
+    {
+
+        $data = null;
+        $status_code = 400;
+        try{
+            request()->validate([
+                'old_password'          => 'required|string|max:255',
+                'password'              => 'required|string|min:6',
+                'password_confirmation' => 'required_with:password|same:password|min:6'
+            ]);
+
+            $user = User::where('id',Auth::id())->first();
+            $current_password = $user->password;
+            $old_password = Hash::make($request->old_password);
+            if( $old_password == $current_password){
+                // update user password
+                $user->password = Hash::make($request->password);
+                $user->save();
+
+                $status_code = 200;
+                $message = 'Ubah Kata Sandi Berhasil';
+            }
+            else{
+                $message = 'Kata sandi lama tidak sesuai';
+            }
+        }
+        catch(\Exception $e){
+            $status_code = 422;
+            $data = [
+                'message' => $e->getMessage()
+            ];
         }
 
         $respon = [
