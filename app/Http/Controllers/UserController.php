@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Models\Customer;
+use App\Models\Member;
 use App\Models\User;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function index() {
-        // return view('users/users',[
-        //     'title' => 'Daftar User',
-        //     'countPending' => Customer::countPending()
-        // ]);
+        return view('users/users',[
+            'title' => 'Daftar User',
+            'admins' => User::where('role','admin')->get(),
+            'operators' => User::where('role','operator')->get(),
+            'countPending' => Member::where('status','pending')->get()->count(),
+        ]);
     }
 
     /**

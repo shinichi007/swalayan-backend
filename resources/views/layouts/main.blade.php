@@ -150,7 +150,9 @@
                         <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-user d-sm-none"></i>
-                            <span class="d-none d-sm-inline-block">Admin</span>
+                            <span class="d-none d-sm-inline-block">
+                                Admin
+                            </span>
                             <i class="fa fa-fw fa-angle-down opacity-50 ms-1 d-none d-sm-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
@@ -159,15 +161,18 @@
                             </div>
                             <div class="p-2">
                                 <a class="dropdown-item" href="/profile">
-                                    <i class="far fa-fw fa-user me-1"></i> Profil
+                                    <i class="far fa-fw fa-user me-1"></i>
+                                    Profil
                                 </a>
                                 <div role="separator" class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout"
                                     data-action="side_overlay_toggle">
-                                    <i class="far fa-fw fa-building me-1"></i> Pengaturan
+                                    <i class="far fa-fw fa-building me-1"></i>
+                                    Pengaturan
                                 </a>
                                 <a class="dropdown-item" href="/">
-                                    <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i> Logout
+                                    <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i>
+                                    Logout
                                 </a>
                             </div>
                         </div>

@@ -52,33 +52,44 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="fw-semibold">Ujang
-                                    </td>
-                                    <td class="d-none d-sm-table-cell"><em class="text-muted">ujang@gmail.com</em>
-                                    </td>
-                                    <td class="d-none d-sm-table-cell text-center">
-                                        <em class="text-muted">089529303412</em>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge bg-success">
-                                            Admin</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="btn-group" bis_skin_checked="1">
-                                            <button type="button"
-                                                class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#modal-block-fromright">
-                                                <i class="fa fa-pencil-alt"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-sm btn-alt-secondary js-swal-confirm">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @if(count($admins)>0)
+                                    @foreach ($admins as $key => $admin)
+                                    <tr>
+                                        <td class="text-center">{{ $key+1 }}</td>
+                                        <td class="fw-semibold">
+                                            {{ $admin->name }}
+                                        </td>
+                                        <td class="d-none d-sm-table-cell">
+                                            <em class="text-muted">
+                                                {{ $admin->email }}
+                                            </em>
+                                        </td>
+                                        <td class="d-none d-sm-table-cell text-center">
+                                            <em class="text-muted">
+                                                {{ $admin->phone }}
+                                            </em>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success">
+                                                {{ $admin->role }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group" bis_skin_checked="1">
+                                                <button type="button"
+                                                    class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-block-fromright">
+                                                    <i class="fa fa-pencil-alt"></i>
+                                                </button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-alt-secondary js-swal-confirm">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -96,33 +107,44 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="fw-semibold">Abdul
-                                    </td>
-                                    <td class="d-none d-sm-table-cell"><em class="text-muted">abdul@gmail.com</em>
-                                    </td>
-                                    <td class="d-none d-sm-table-cell text-center">
-                                        <em class="text-muted">085156565729</em>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge bg-info">
-                                            Operator</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="btn-group" bis_skin_checked="1">
-                                            <button type="button"
-                                                class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#modal-block-fromright">
-                                                <i class="fa fa-pencil-alt"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-sm btn-alt-secondary js-swal-confirm2">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                            @if(count($operators)>0)
+                                    @foreach ($operators as $key => $operator)
+                                    <tr>
+                                        <td class="text-center">{{ $key+1 }}</td>
+                                        <td class="fw-semibold">
+                                            {{ $operator->name }}
+                                        </td>
+                                        <td class="d-none d-sm-table-cell">
+                                            <em class="text-muted">
+                                                {{ $operator->email }}
+                                            </em>
+                                        </td>
+                                        <td class="d-none d-sm-table-cell text-center">
+                                            <em class="text-muted">
+                                                {{ $operator->phone }}
+                                            </em>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success">
+                                                {{ $operator->role }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group" bis_skin_checked="1">
+                                                <button type="button"
+                                                    class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-block-fromright">
+                                                    <i class="fa fa-pencil-alt"></i>
+                                                </button>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-alt-secondary js-swal-confirm">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -146,30 +168,30 @@
                     <div class="block-content">
                         <div class="mb-4" bis_skin_checked="1">
                             <label class="form-label" for="example-text-input">Nama</label>
-                            <input type="text" class="form-control" id="example-text-input" name="example-text-input"
+                            <input type="text" class="form-control" id="example-text-input" name="name"
                                 placeholder="Masukan Nama Lengkap">
                         </div>
                         <div class="mb-4" bis_skin_checked="1">
                             <label class="form-label" for="example-text-input">Email</label>
-                            <input type="email" class="form-control" id="example-text-input" name="example-text-input"
-                                placeholder="Masukan Email">
+                            <input type="email" class="form-control" id="example-text-input" name="email"
+                                placeholder="Masukan Email" required>
                         </div>
                         <div class="mb-4" bis_skin_checked="1">
                             <label class="form-label" for="example-text-input">Nomor HP</label>
-                            <input type="text" class="form-control" id="example-text-input" name="example-text-input"
-                                placeholder="Masukan Nomor HP Lengkap">
+                            <input type="text" class="form-control" id="example-text-input" name="phone"
+                                placeholder="Masukan Nomor HP Lengkap" required>
                         </div>
                         <div class="mb-4" bis_skin_checked="1">
                             <label class="form-label" for="example-text-input">Password</label>
-                            <input type="text" class="form-control" id="example-text-input" name="example-text-input"
-                                placeholder="Masukan Password">
+                            <input type="password" class="form-control" id="example-text-input" name="password"
+                                placeholder="Masukan Password" required>
                         </div>
                         <div class="mb-4" bis_skin_checked="1">
                             <label class="form-label" for="example-select">Role</label>
-                            <select class="form-select" id="example-select" name="example-select">
+                            <select class="form-select" id="example-select" name="role" required>
                                 <option selected="">-- Pilih Role --</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Operator</option>
+                                <option value="admin">Admin</option>
+                                <option value="operator">Operator</option>
                             </select>
                         </div>
                     </div>
