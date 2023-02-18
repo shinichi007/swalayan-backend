@@ -53,16 +53,16 @@
                             </thead>
                             <tbody>
                                 <?php $indexPending = 1; ?>
-                                @foreach ($pending as $key => $pen)
+                                @foreach ($pendings as $key => $pending)
                                     <tr>
                                         <td class="text-center">{{ $indexPending++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="customer/{{ $pen['id'] }}">{{ $pen['data']['name'] }}</a>
+                                            <a href="{{ url('customer/'.$pending['id']) }}">{{ $pending->user['name'] }}</a>
                                         </td>
-                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $pen['data']['email'] }}</em>
+                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $pending->user['email'] }}</em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $pen['data']['phone'] }}</em>
+                                            <em class="text-muted">{{ $pending->user['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-danger">
@@ -88,16 +88,16 @@
                             </thead>
                             <tbody>
                                 <?php $indexRegular = 1; ?>
-                                @foreach ($regular as $key => $reg)
+                                @foreach ($regulars as $key => $reg)
                                     <tr>
                                         <td class="text-center">{{ $indexRegular++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="customer/{{ $reg['id'] }}">{{ $reg['data']['name'] }}</a>
+                                            <a href="{{ url('customer/'.$reg['id']) }}">{{ $reg->user['name'] }}</a>
                                         </td>
-                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $reg['data']['email'] }}</em>
+                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $reg->user['email'] }}</em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $reg['data']['phone'] }}</em>
+                                            <em class="text-muted">{{ $reg->user['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-info">
@@ -125,26 +125,26 @@
                             </thead>
                             <tbody>
                                 <?php $indexMember = 1; ?>
-                                @foreach ($member as $key => $mem)
+                                @foreach ($members as $key => $member)
                                     <tr>
                                         <td class="text-center">{{ $indexMember++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="customer/{{ $mem['id'] }}">{{ $mem['data']['name'] }}</a>
+                                            <a href="{{ url('customer/'.$member['id']) }}">{{ $member->user['name'] }}</a>
                                         </td>
-                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $mem['data']['email'] }}</em>
+                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $member->user['email'] }}</em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $mem['data']['phone'] }}</em>
+                                            <em class="text-muted">{{ $member->user['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-success">
                                                 Member</span>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $mem['member']['id'] }}</em>
+                                            <em class="text-muted">{{ $member['id'] }}</em>
                                         </td>
                                         <td class="text-center">
-                                            <em class="text-muted">{{ $mem['member']['point'] }}</em>
+                                            <em class="text-muted">{{ $member['point'] }}</em>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -171,20 +171,20 @@
                                     <tr>
                                         <td class="text-center">{{ $indexAll++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="customer/{{ $cust['id'] }}">{{ $cust['data']['name'] }}</a>
+                                            <a href="{{ url('customer/'.$cust['id']) }}">{{ $cust->user['name'] }}</a>
                                         </td>
-                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $cust['data']['email'] }}</em>
+                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $cust->user['email'] }}</em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $cust['data']['phone'] }}</em>
+                                            <em class="text-muted">{{ $cust->user['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
                                             <span
-                                                class="badge {{ $cust['member']['status'] === 'member' ? 'bg-success' : ($cust['member']['status'] === 'pending' ? 'bg-danger' : 'bg-info') }}">
-                                                {{ $cust['member']['status'] === 'member' ? 'Member' : ($cust['member']['status'] === 'pending' ? 'Pending' : 'Reguler') }}</span>
+                                                class="badge {{ $cust['status'] === 'member' ? 'bg-success' : ($cust['status'] === 'pending' ? 'bg-danger' : 'bg-info') }}">
+                                                {{ $cust['status'] === 'member' ? 'Member' : ($cust['status'] === 'pending' ? 'Pending' : 'Reguler') }}</span>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $cust['member']['point'] }}</em>
+                                            <em class="text-muted">{{ $cust['point'] }}</em>
                                         </td>
                                     </tr>
                                 @endforeach

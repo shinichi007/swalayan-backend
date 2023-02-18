@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 use App\Models\Customer;
-
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     public function index(){
+        $pendings = Member::where('status','pending')->get();
         return view('customers/customers',[
             'title' => 'Customer',
-            'regular' => Customer::regular(),
-            'member' => Customer::member(),
-            'pending' => Customer::pending(),
-            'customers' => Customer::all(),
-            'countPending' => Customer::countPending()
+            'regulars' => Member::where('status','regular')->get(),
+            'customers' => Member::get(),
+            'members' => Member::where('status','member')->get(),
+            'pendings' => $pendings,
+            'countPending' => count($pendings)
         ]);
     }
 
@@ -25,7 +26,7 @@ class CustomerController extends Controller
             'countPending' => Customer::countPending()
         ]);
     }
-    
+
     public function editCustomer($id) {
         return view('customers/edit-customer',[
             'title' => 'Edit Customer',

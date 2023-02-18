@@ -18,7 +18,6 @@ class MemberController extends Controller
     {
         $members = Member::latest();
         return response()->json($members->paginate(10));
-
     }
 
     /**
