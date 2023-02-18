@@ -23,6 +23,9 @@ Route::post('/register', [AuthController::class, 'do_register']);
 Route::post('/login', [AuthController::class, 'do_login']);
 Route::post('/verify', [AuthController::class, 'verifyAccount']);
 
+Route::post('/forgot-password', [AuthController::class, 'do_forgotPassword']);
+Route::post('/reset-password', [AuthController::class, 'reset_password']);
+
 //Protecting Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
