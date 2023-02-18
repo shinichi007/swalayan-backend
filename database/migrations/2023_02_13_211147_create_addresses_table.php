@@ -16,7 +16,7 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->enum('type',['rumah','kantor','tetangga'])->default('rumah')->nullable();
+            $table->string('type')->default('rumah')->nullable();
             $table->string('name',255);
             $table->boolean('default');
             $table->string('phone',50);

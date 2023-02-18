@@ -21,6 +21,7 @@ use App\Http\Controllers\UserController;
 Route::post('/register', [AuthController::class, 'do_register']);
 //API route for login user
 Route::post('/login', [AuthController::class, 'do_login']);
+Route::post('/verify', [AuthController::class, 'verifyAccount']);
 
 //Protecting Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {

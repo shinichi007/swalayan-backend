@@ -19,7 +19,7 @@ class userVerify extends Model
     protected $fillable = [
         'user_id',
         'is_used',
-        'token',
+        'otp',
         'expired_time',
     ];
 

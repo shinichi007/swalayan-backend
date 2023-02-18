@@ -76,7 +76,7 @@ class UserController extends Controller
         try{
             $user = User::where('id',$user_id)->firstOrFail();
 
-            $member = [];
+            $member = null;
             if($user->member){
                 $member = [
                     "member_id" => $user->member->id,
@@ -94,7 +94,7 @@ class UserController extends Controller
                 ];
             }
 
-            $addresses = [];
+            $addresses = null;
             if(count($user->addresses) > 0){
                 $addresses = $user->addresses;
             }
