@@ -178,6 +178,7 @@ class AuthController extends Controller
                 $user_verify->save();
 
                 $token = $user->createToken('auth_token')->plainTextToken;
+
                 $data = [
                     'user_id'   => $user->id,
                     'role'      => $user->role,
@@ -185,7 +186,7 @@ class AuthController extends Controller
                     'phone'     => $user->phone,
                     'email'     => $user->email,
                     'gender'    => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
-                    'avatar'    => $user->avatar
+                    'avatar'    => request()->getSchemeAndHttpHost().'/img-view/'.$user->avatar
                 ];
             }
         }

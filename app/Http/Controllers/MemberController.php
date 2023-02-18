@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -106,7 +107,7 @@ class MemberController extends Controller
                 'phone' => $user->phone,
                 'email' => $user->email,
                 'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
-                'avatar' => "https://randomuser.me/api/portraits/men/26.jpg",
+                'avatar' => request()->getSchemeAndHttpHost().Storage::url($user->avatar),
                 'address' => $addresses,
                 'member'  => [
                     "member_id" => $member->id,
@@ -116,7 +117,7 @@ class MemberController extends Controller
                     "data" => [
                         "address" => $member->ktp_address,
                         "nik" => $member->nik,
-                        "ktp" => $member->ktp_img,
+                        "ktp" => request()->getSchemeAndHttpHost().Storage::url($member->ktp_img),
                         "ktp_name" => $member->ktp_name,
                         "gender" => $member->ktp_gender == 'f' ? 'Wanita':'Laki - Laki',
                         "dob" => $member->ktp_dob,

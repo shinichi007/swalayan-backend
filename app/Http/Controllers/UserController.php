@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -86,7 +87,7 @@ class UserController extends Controller
                     "data" => [
                         "address" => $user->member->ktp_address,
                         "nik" => $user->member->nik,
-                        "ktp" => $user->member->ktp_img,
+                        "ktp" => request()->getSchemeAndHttpHost().Storage::url($user->member->ktp_img),
                         "ktp_name" => $user->member->ktp_name,
                         "gender" => $user->member->ktp_gender == 'f' ? 'Wanita':'Laki - Laki',
                         "dob" => $user->member->ktp_dob,
@@ -107,7 +108,7 @@ class UserController extends Controller
                     'phone' => $user->phone,
                     'email' => $user->email,
                     'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
-                    'avatar' => $user->avatar,
+                    'avatar' => request()->getSchemeAndHttpHost().Storage::url($user->avatar),
                     'address' => $addresses,
                     'member'  => $member,
             ];
@@ -149,7 +150,7 @@ class UserController extends Controller
                     "data" => [
                         "address" => $user->member->ktp_address,
                         "nik" => $user->member->nik,
-                        "ktp" => $user->member->ktp_img,
+                        "ktp" => request()->getSchemeAndHttpHost().Storage::url($user->member->ktp_img),
                         "ktp_name" => $user->member->ktp_name,
                         "gender" => $user->member->ktp_gender == 'f' ? 'Wanita':'Laki - Laki',
                         "dob" => $user->member->ktp_dob,
@@ -170,7 +171,7 @@ class UserController extends Controller
                 'phone' => $user->phone,
                 'email' => $user->email,
                 'gender' => $user->gender == 'f' ? 'Wanita':'Laki - Laki',
-                'avatar' => $user->avatar,
+                'avatar' => request()->getSchemeAndHttpHost().Storage::url($user->avatar),
                 'address' => $addresses,
                 'member'  => $member,
             ];
@@ -256,7 +257,7 @@ class UserController extends Controller
             $user->save();
 
             $message = 'Upload profile Success';
-            $data = $user;
+            $data = request()->getSchemeAndHttpHost().Storage::url($user->avatar);
         }
         catch(\Exception $e){
             $status_code = 422;
