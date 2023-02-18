@@ -128,7 +128,7 @@ class UserController extends Controller
         return response()->json($respon, $status_code);
     }
 
-/**
+    /**
      * Display the specified resource.
      *
      * @return \Illuminate\Http\Response
@@ -204,14 +204,14 @@ class UserController extends Controller
         try{
             request()->validate([
                 'name'      => 'required|string|max:255',
-                'role'      => 'required|string|max:10',
+                'gender'    => 'required|string|max:1',
             ]);
 
             $status_code = 200;
             $user = User::where('id',$user_id)->firstOrFail();
 
             $user->name = $request->name;
-            $user->role = $request->role;
+            $user->gender = $request->gender;
             $user->save();
 
             $message = 'Update Success';
