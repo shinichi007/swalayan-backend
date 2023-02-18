@@ -15,5 +15,11 @@ class SettingSeeder extends Seeder
     public function run()
     {
         Setting::factory()->count(1)->create();
+
+        $setting = new Setting;
+        $setting->user_id = 1;
+        $setting->name = 'fonnte_token';
+        $setting->value = 'YWCQKx!Y6--njsAyL-47';
+        $setting->save();
     }
 }

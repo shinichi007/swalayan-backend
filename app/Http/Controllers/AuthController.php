@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\userVerify;
@@ -112,15 +112,14 @@ class AuthController extends Controller
                     'expired_time'  => $expired_time,
                 ]);
 
-
-                Mail::send('emails.emailVerificationEmail', ['otp' => $otp, 'expired_time' => $expired_time], function($message) use($request){
-                    $message->to($request->email);
-                    $message->subject('Email Verification Code');
-                });
-
                 $status_code = 200;
                 $message = "Login Success, Please Input OTP";
                 $data = null;
+
+                userVerify::sendMail($user->email, $otp, $expired_time);
+
+                $text_sms = 'This is your secret verification code: '.$otp.' Expired at '.$expired_time;
+                userVerify::sendWA($user->phone, $text_sms);
             }
         }
         catch(\Exception $e){
