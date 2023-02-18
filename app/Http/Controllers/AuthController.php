@@ -50,11 +50,25 @@ class AuthController extends Controller
                 'password'  => Hash::make($request->password)
              ]);
 
-            $token = $user->createToken('auth_token')->plainTextToken;
-
             $status_code = 200;
             $message = 'Register Success';
-            $data = $user;
+            $data = null;
+
+            $otp = random_int(100000,999999);
+            $exp_time = new DateTime('+5 minutes', new DateTimeZone('Asia/Jakarta'));
+            $expired_time = $exp_time->format('Y-m-d H:i:s');
+
+            userVerify::create([
+                'user_id'       => $user->id,
+                'otp'           => $otp,
+                'is_used'       => false,
+                'expired_time'  => $expired_time,
+            ]);
+
+            userVerify::sendMail($user->email, $otp, $expired_time);
+            $text_sms = 'This is your secret verification code: '.$otp.' Expired at '.$expired_time;
+            userVerify::sendWA($user->phone, $text_sms);
+
         }
         catch(\Exception $e){
             $data = null;
@@ -117,7 +131,6 @@ class AuthController extends Controller
                 $data = null;
 
                 userVerify::sendMail($user->email, $otp, $expired_time);
-
                 $text_sms = 'This is your secret verification code: '.$otp.' Expired at '.$expired_time;
                 userVerify::sendWA($user->phone, $text_sms);
             }
