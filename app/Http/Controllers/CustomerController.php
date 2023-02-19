@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Customer;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
@@ -15,23 +14,23 @@ class CustomerController extends Controller
             'customers' => Member::get(),
             'members' => Member::where('status','member')->get(),
             'pendings' => $pendings,
-            'countPending' => count($pendings)
+            'countPending' => $pendings->count()
         ]);
     }
 
-    public function detailCustomer($id) {
+    public function detail_customer($customer_id) {
         return view('customers/detail-customer',[
             'title' => 'Detail Customer',
-            'customer' => Customer::detailCustomer($id),
-            'countPending' => Customer::countPending()
+            'customer' => Member::find($customer_id),
+            'countPending' => Member::where('status','pending')->get()->count(),
         ]);
     }
 
-    public function editCustomer($id) {
+    public function edit_customer($customer_id) {
         return view('customers/edit-customer',[
             'title' => 'Edit Customer',
-            'customer' => Customer::detailCustomer($id),
-            'countPending' => Customer::countPending()
+            'customer' => Member::find($customer_id),
+            'countPending' => Member::where('status','pending')->get()->count(),
         ]);
     }
 }

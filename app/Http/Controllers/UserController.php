@@ -1,24 +1,49 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Customer;
 use App\Models\Member;
 use App\Models\User;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function index() {
-        return view('users/users',[
-            'title' => 'Daftar User',
-            'admins' => User::where('role','admin')->get(),
-            'operators' => User::where('role','operator')->get(),
-            'countPending' => Member::where('status','pending')->get()->count(),
-        ]);
+
+    public function login(Request $request) {
+        return view('login');
+    }
+
+    public function do_login(Request $request){
+
+        try{
+            request()->validate([
+                'email'         => 'required|string|email|max:255',
+                'password'      => 'required|string|min:6'
+            ]);
+
+            $credentials = $request->only('email', 'password');
+
+            if (Auth::attempt($credentials)) {
+                return redirect()->intended('dashboard')
+                            ->withSuccess('Signed in');
+            }
+        }
+        catch(\Exception $e){
+            return redirect()->route('login')
+              ->with('error','Email-Address And Password Are Wrong.');
+        }
+
+    }
+
+    public function register(Request $request) {
+        return view('register');
+    }
+
+    public function forgotPassword(Request $request) {
+        return view('forgot-password');
     }
 
     /**
@@ -296,10 +321,9 @@ class UserController extends Controller
                 'password_confirmation' => 'required_with:password|same:password|min:6'
             ]);
 
-            $user = User::where('id',Auth::id())->first();
-            $current_password = $user->password;
-            $old_password = Hash::make($request->old_password);
-            if( $old_password == $current_password){
+            $user = User::find($user_id);
+
+            if(Hash::check($request->old_password, $user->password)){
                 // update user password
                 $user->password = Hash::make($request->password);
                 $user->save();
@@ -313,9 +337,7 @@ class UserController extends Controller
         }
         catch(\Exception $e){
             $status_code = 422;
-            $data = [
-                'message' => $e->getMessage()
-            ];
+            $message = $e->getMessage();
         }
 
         $respon = [

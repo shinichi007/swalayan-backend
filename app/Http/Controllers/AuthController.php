@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -15,17 +14,6 @@ use DateTimeZone;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
-        return view('login');
-    }
-
-    public function register(Request $request) {
-        return view('register');
-    }
-
-    public function forgotPassword(Request $request) {
-        return view('forgot-password');
-    }
 
     public function do_forgotPassword(Request $request)
     {

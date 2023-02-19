@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Member;
-
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
+
     public function index()
     {
         return view('dashboard', [
             'title' => 'Beranda',
             'customers' => Member::where('status','regular')->orWhere('status','pending')->get(),
             'members' => Member::where('status','member')->get(),
-            'countPending' => count(Member::where('status','pending')->get())
+            'countPending' => Member::where('status','pending')->get()->count()
         ]);
     }
 
@@ -22,7 +22,17 @@ class DashboardController extends Controller
     {
         return view('logs', [
             'title' => 'Logs',
-            'countPending' => Customer::countPending()
+            'countPending' => Member::where('status','pending')->get()->count()
         ]);
     }
+
+    public function list_user() {
+        return view('users/users',[
+            'title' => 'Daftar User',
+            'admins' => User::where('role','admin')->get(),
+            'operators' => User::where('role','operator')->get(),
+            'countPending' => Member::where('status','pending')->get()->count(),
+        ]);
+    }
+
 }

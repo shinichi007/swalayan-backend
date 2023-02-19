@@ -18,15 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'login']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/', [UserController::class, 'login']);
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/login', [UserController::class, 'do_login'])->name('login.submit');
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-    Route::get('/customers', [CustomerController::class, 'index']);
-    Route::get('/customer/{id}', [CustomerController::class, 'detailCustomer']);
-    Route::get('/customer/edit/{id}', [CustomerController::class, 'editCustomer']);
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/customers', [CustomerController::class, 'index'])->name('dashboard.customer');
+    Route::get('/customer/{id}', [CustomerController::class, 'detail_customer']);
+    Route::get('/customer/edit/{id}', [CustomerController::class, 'edit_customer']);
     Route::get('/profile', [ProfileController::class, 'index']);
-    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');
     Route::get('/logs', [DashboardController::class, 'logs']);
-// });
+});

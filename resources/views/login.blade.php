@@ -27,22 +27,33 @@
                     <p class="text-uppercase fw-bold fs-sm text-muted">Login</p>
                   </div>
 
-                  <form class="js-validation-signin" action="/dashboard">
+                  <form class="js-validation-signin" method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div class="mb-4">
                       <div class="input-group input-group-lg">
-                        <input type="text" class="form-control" id="login-email" name="login-email" placeholder="Email">
+                        <input type="email" class="form-control" id="login-email" name="email" placeholder="Email">
                         <span class="input-group-text">
-                          <i class="fa fa-envelope"></i>
+                            <i class="fa fa-envelope"></i>
                         </span>
                       </div>
+                        @if ($errors->has('email'))
+                            <div id="login-email-error" class="invalid-feedback animated fadeIn" style="display: block;">
+                                Silahkan masukan email
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-4">
                       <div class="input-group input-group-lg">
-                        <input type="password" class="form-control" id="login-password" name="login-password" placeholder="Password">
+                        <input type="password" class="form-control" id="login-password" name="password" placeholder="Password">
                         <span class="input-group-text">
                           <i class="fa fa-asterisk"></i>
                         </span>
                       </div>
+                      @if ($errors->has('email'))
+                            <div id="login-password-error" class="invalid-feedback animated fadeIn" style="display: block;">
+                                Silahkan masukan password
+                            </div>
+                        @endif
                     </div>
                     <div class="d-sm-flex justify-content-sm-between align-items-sm-center text-center text-sm-start mb-4">
                       <div class="fw-semibold fs-sm py-1">
@@ -51,7 +62,8 @@
                     </div>
                     <div class="text-center mb-4">
                       <button type="submit" class="btn btn-hero btn-primary">
-                        <i class="fa fa-fw fa-sign-in-alt opacity-50 me-1"></i> Login
+                        <i class="fa fa-fw fa-sign-in-alt opacity-50 me-1"></i>
+                        Login
                       </button>
                     </div>
                   </form>
