@@ -41,7 +41,7 @@ class AuthController extends Controller
                 ]);
 
                 userVerify::sendMail($user->email, $otp, $expired_time);
-                $text_sms = 'Kode OTP Lupa Password : '.$otp.' berlaku sampai '.$expired_time;
+                $text_sms = 'Kode OTP : '.$otp.' berlaku sampai '.$expired_time;
                 userVerify::sendWA($user->phone, $text_sms);
 
                 $status_code = 404;
@@ -142,7 +142,7 @@ class AuthController extends Controller
             ]);
 
             userVerify::sendMail($user->email, $otp, $expired_time);
-            $text_sms = 'Kode OTP Lupa Password : '.$otp.' berlaku sampai '.$expired_time;
+            $text_sms = 'Kode OTP : '.$otp.' berlaku sampai '.$expired_time;
             userVerify::sendWA($user->phone, $text_sms);
 
         }
@@ -207,7 +207,7 @@ class AuthController extends Controller
                 $data = null;
 
                 userVerify::sendMail($user->email, $otp, $expired_time);
-                $text_sms = 'Kode OTP Verifikasi : '.$otp.' berlaku sampai '.$expired_time;
+                $text_sms = 'Kode OTP : '.$otp.' berlaku sampai '.$expired_time;
                 userVerify::sendWA($user->phone, $text_sms);
             }
         }
