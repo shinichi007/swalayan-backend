@@ -143,10 +143,10 @@ class AddressController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Address  $address
+     * @param  int  $address_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Address $address)
+    public function update(Request $request, $address_id)
     {
         try{
             request()->validate([
@@ -162,7 +162,7 @@ class AddressController extends Controller
             if($request->default){
                 Address::where('user_id',Auth::id())->where('default',true)->update(["default" => false]);
             }
-
+            $address = Address::find($address_id);
             $address->update($request->all());
 
             $status_code = 200;
