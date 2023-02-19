@@ -16,7 +16,7 @@ class CreateMembersTable extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->enum('status',['pending','regular','member'])->default('pending')->nullable();
+            $table->enum('status',['pending','regular','member','reject'])->default('pending')->nullable();
             $table->integer('code')->nullable();
             $table->integer('point');
             $table->string('nik')->unique()->index();
