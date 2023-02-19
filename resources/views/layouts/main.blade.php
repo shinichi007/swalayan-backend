@@ -151,7 +151,7 @@
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-user d-sm-none"></i>
                             <span class="d-none d-sm-inline-block">
-                                Admin
+                                {{ Auth::user()->name }}
                             </span>
                             <i class="fa fa-fw fa-angle-down opacity-50 ms-1 d-none d-sm-inline-block"></i>
                         </button>

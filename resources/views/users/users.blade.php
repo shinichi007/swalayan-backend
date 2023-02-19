@@ -74,19 +74,23 @@
                                                 {{ $admin->role }}
                                             </span>
                                         </td>
+
                                         <td class="text-center">
-                                            <div class="btn-group" bis_skin_checked="1">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-block-fromright">
-                                                    <i class="fa fa-pencil-alt"></i>
-                                                </button>
-                                                <button type="button"
-                                                    class="btn btn-sm btn-alt-secondary js-swal-confirm">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
+                                            @if($admin->role == 'admin')
+                                                <div class="btn-group" bis_skin_checked="1">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-block-fromright">
+                                                        <i class="fa fa-pencil-alt"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-alt-secondary js-swal-confirm">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
                                         </td>
+
                                     </tr>
                                     @endforeach
                                 @endif

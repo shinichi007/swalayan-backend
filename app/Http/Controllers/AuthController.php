@@ -142,7 +142,7 @@ class AuthController extends Controller
             ]);
 
             userVerify::sendMail($user->email, $otp, $expired_time);
-            $text_sms = 'This is your secret verification code: '.$otp.' Expired at '.$expired_time;
+            $text_sms = 'Kode OTP Lupa Password : '.$otp.' berlaku sampai '.$expired_time;
             userVerify::sendWA($user->phone, $text_sms);
 
         }
