@@ -172,6 +172,10 @@
                                     <i class="far fa-fw fa-user me-1"></i>
                                     Profil
                                 </a>
+                                <a class="dropdown-item" href="{{ URL('/change-password') }}">
+                                    <i class="far fa-fw fa-lock me-1"></i>
+                                    Ubah Password
+                                </a>
                                 <div role="separator" class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout"
                                     data-action="side_overlay_toggle">

@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit_customer']);
     Route::post('/customer/{id}/edit', [CustomerController::class, 'do_update_customer']);
     Route::get('/profile', [ProfileController::class, 'index']);
+    Route::post('/profile', [ProfileController::class, 'update']);
+    Route::get('/change-password', [ProfileController::class, 'change_password']);
+    Route::post('/change-password', [ProfileController::class, 'do_change_password']);
     Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');
     Route::get('/logs', [DashboardController::class, 'logs']);
     Route::get('/logout', function () {

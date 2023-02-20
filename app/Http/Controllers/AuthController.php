@@ -44,7 +44,7 @@ class AuthController extends Controller
                 $text_sms = 'Kode OTP : '.$otp.' berlaku sampai '.$expired_time;
                 userVerify::sendWA($user->phone, $text_sms);
 
-                $status_code = 404;
+                $status_code = 200;
                 $message = 'Permintaan berhasil';
             }else{
                 $message = 'Akun tidak ditemukan';
