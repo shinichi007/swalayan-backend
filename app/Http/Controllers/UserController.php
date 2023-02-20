@@ -27,17 +27,24 @@ class UserController extends Controller
             ]);
 
             $credentials = $request->only('email', 'password');
-
+            $msg = 'Kamu tidak memiliki akses';
             if (Auth::attempt($credentials)) {
                 if(in_array(Auth::user()->role,['admin','operator'])){
-                    return redirect()->intended('dashboard')
+                    $user = User::where('id',Auth::id())->first();
+                    if(is_null($user->remember_token)){
+                        $user->remember_token = $user->createToken('auth_token')->plainTextToken;
+                        $user->save();
+                        return redirect()->intended('dashboard')
                             ->withSuccess('login berhasil');
-                }else{
-                    Session::flush();
-                    Auth::logout();
-
-                    return redirect()->intended('/')->withErrors(['msg' => 'Kamu tidak memiliki akses']);
+                    }
+                    $msg = 'Akun Kamu sedang login didevice lain';
                 }
+
+                Session::flush();
+                Auth::logout();
+
+                return redirect()->intended('/')->withErrors(['msg' => $msg]);
+
             }else{
                 return redirect()->intended('/')->withErrors(['msg' => 'Email atau Password Salah']);
             }

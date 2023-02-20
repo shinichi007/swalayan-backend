@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -46,6 +47,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/users/{id}/edit', [UserController::class, 'edit_user'])->name('dashboard.user_edit');
     Route::get('/logs', [DashboardController::class, 'logs']);
     Route::get('/logout', function () {
+        $user = User::where('id',Auth::id())->first();
+        $user->remember_token = null;
+        $user->save();
         Session::flush();
         Auth::logout();
         return redirect()->intended('login')
