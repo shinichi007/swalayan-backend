@@ -66,7 +66,12 @@
                                                 URL Aplikasi
                                             </label>
                                             <input type="text" name="url" class="form-control" value="{{ $data_setting->url }}" required>
-                                            <input type="hidden" name="fonnte_token" value="{{ $data_setting->fonnte_token }}">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">
+                                               WA Token
+                                            </label>
+                                            <input type="text" class="form-control" name="fonnte_token" value="{{ $data_setting->fonnte_token }}" required>
                                         </div>
                                     </div>
                                     <div class="block-content block-content-full border-top">

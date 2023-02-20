@@ -91,6 +91,7 @@ class SettingController extends Controller
             request()->validate([
                 'versi' => 'required|string',
                 'url'   => 'required|string',
+                'fonnte_token'   => 'required|string',
             ]);
 
             $setting = Setting::where('id',$setting_id)->first();
@@ -103,7 +104,7 @@ class SettingController extends Controller
             ]);
 
             return redirect()->intended('dashboard')
-                                ->withSuccess('ubah password berhasil');
+                                ->withSuccess('ubah setting berhasil');
 
         }
         catch(\Exception $e){
