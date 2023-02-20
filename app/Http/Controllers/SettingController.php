@@ -82,12 +82,33 @@ class SettingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Setting  $setting
+     * @param  int  $setting_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Setting $setting)
+    public function update(Request $request, $setting_id)
     {
-        //
+        try{
+            request()->validate([
+                'versi' => 'required|string',
+                'url'   => 'required|string',
+            ]);
+
+            $setting = Setting::where('id',$setting_id)->first();
+            $setting->update([
+                'value' => json_encode([
+                    'versi' => $request->versi,
+                    'url'   => $request->url,
+                    'fonnte_token' => $request->fonnte_token
+                ]),
+            ]);
+
+            return redirect()->intended('dashboard')
+                                ->withSuccess('ubah password berhasil');
+
+        }
+        catch(\Exception $e){
+            return redirect()->intended('dashboard')->withErrors(['msg' => $e->getMessage()]);
+        }
     }
 
     /**

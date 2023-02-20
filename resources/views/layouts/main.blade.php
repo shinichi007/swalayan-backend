@@ -43,27 +43,30 @@
                     <div class="block-content tab-content overflow-hidden">
                         <div class="tab-pane pull-x fade fade-up show active" id="so-settings" role="tabpanel"
                             aria-labelledby="so-settings-tab" tabindex="0">
-                            <form action="{{ url('/setting') }}" method="PUT" onsubmit="return false;">
-                                <div class="block mb-0">
-                                    <div class="block-content block-content-sm block-content-full bg-body">
-                                        <span class="text-uppercase fs-sm fw-bold">App</span>
-                                    </div>
-                                    @php
-                                        $setting = Cache::get('setting_list')[0];
-                                        $data_setting = json_decode($setting['value']);
-                                    @endphp
+                            <div class="block mb-0">
+                                <div class="block-content block-content-sm block-content-full bg-body">
+                                    <span class="text-uppercase fs-sm fw-bold">App</span>
+                                </div>
+                                @php
+                                    $setting = Cache::get('setting_list')[0];
+                                    $data_setting = json_decode($setting['value']);
+                                @endphp
+                                <form action="{{ url('/setting/'.$setting['id']) }}" method="POST">
+                                    @csrf
                                     <div class="block-content block-content-full">
                                         <div class="mb-4">
                                             <label class="form-label">
                                                 Versi Aplikasi
                                             </label>
-                                            <input type="text" readonly class="form-control" value="{{ $data_setting->versi }}">
+                                            <input type="text" name="versi" class="form-control"
+                                            value="{{ $data_setting->versi }}" required>
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">
                                                 URL Aplikasi
                                             </label>
-                                            <input type="text" class="form-control" value="{{ $data_setting->url }}">
+                                            <input type="text" name="url" class="form-control" value="{{ $data_setting->url }}" required>
+                                            <input type="hidden" name="fonnte_token" value="{{ $data_setting->fonnte_token }}">
                                         </div>
                                     </div>
                                     <div class="block-content block-content-full border-top">
@@ -72,8 +75,8 @@
                                             Simpan
                                         </button>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
