@@ -54,10 +54,11 @@ class CustomerController extends Controller
             ]);
 
             $member = Member::find($customer_id);
-            $member->nik = '';
             $member->status = $request->status;
-            if($request->reason)
+            if($request->status == 'reject'){
+                $member->nik = 'NIK-'.$customer_id;
                 $member->reason = $request->reason;
+            }
             $member->save();
 
             return redirect()->intended('customers')
