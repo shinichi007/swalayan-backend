@@ -5,7 +5,9 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +32,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');
     Route::get('/logs', [DashboardController::class, 'logs']);
+    Route::get('/logout', function () {
+        Session::flush();
+        Auth::logout();
+        return redirect()->intended('login')
+                ->withSuccess('Berhasil Logout');
+    });
 });

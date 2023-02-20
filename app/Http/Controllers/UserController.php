@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -27,13 +28,20 @@ class UserController extends Controller
             $credentials = $request->only('email', 'password');
 
             if (Auth::attempt($credentials)) {
-                return redirect()->intended('dashboard')
-                            ->withSuccess('Signed in');
+                if(in_array(Auth::user()->role,['admin','operator'])){
+                    return redirect()->intended('dashboard')
+                            ->withSuccess('login berhasil');
+                }else{
+                    Session::flush();
+                    Auth::logout();
+                    return redirect()->intended('login')
+                            ->withSuccess('Kamu tidak memiliki akses');
+                }
             }
         }
         catch(\Exception $e){
             return redirect()->route('login')
-              ->with('error','Email-Address And Password Are Wrong.');
+              ->with('error','Email atau Password tidak benar.');
         }
 
     }

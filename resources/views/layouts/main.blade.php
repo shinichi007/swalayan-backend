@@ -48,20 +48,28 @@
                                     <div class="block-content block-content-sm block-content-full bg-body">
                                         <span class="text-uppercase fs-sm fw-bold">App</span>
                                     </div>
+                                    @php
+                                        $setting = Cache::get('setting_list')[0];
+                                        $data_setting = json_decode($setting['value']);
+                                    @endphp
                                     <div class="block-content block-content-full">
                                         <div class="mb-4">
-                                            <label class="form-label">Versi Aplikasi</label>
-                                            <input type="text" readonly class="form-control" value="1.0.0-beta">
+                                            <label class="form-label">
+                                                Versi Aplikasi
+                                            </label>
+                                            <input type="text" readonly class="form-control" value="{{ $data_setting->versi }}">
                                         </div>
                                         <div class="mb-4">
-                                            <label class="form-label">URL Aplikasi</label>
-                                            <input type="text" class="form-control"
-                                                value="https://wijayacode.net/projects/com.wijayacode.swalayan">
+                                            <label class="form-label">
+                                                URL Aplikasi
+                                            </label>
+                                            <input type="text" class="form-control" value="{{ $data_setting->url }}">
                                         </div>
                                     </div>
                                     <div class="block-content block-content-full border-top">
                                         <button type="submit" class="btn w-100 btn-alt-primary">
-                                            <i class="fa fa-fw fa-save me-1 opacity-50"></i> Simpan
+                                            <i class="fa fa-fw fa-save me-1 opacity-50"></i>
+                                            Simpan
                                         </button>
                                     </div>
                                 </div>
@@ -160,7 +168,7 @@
                                 Opsi
                             </div>
                             <div class="p-2">
-                                <a class="dropdown-item" href="/profile">
+                                <a class="dropdown-item" href="{{ URL('/profile') }}">
                                     <i class="far fa-fw fa-user me-1"></i>
                                     Profil
                                 </a>
@@ -170,7 +178,7 @@
                                     <i class="far fa-fw fa-building me-1"></i>
                                     Pengaturan
                                 </a>
-                                <a class="dropdown-item" href="/">
+                                <a class="dropdown-item" href="{{ URL('/logout') }}">
                                     <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i>
                                     Logout
                                 </a>
