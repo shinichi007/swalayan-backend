@@ -185,7 +185,9 @@
                                     <tr>
                                         <td class="text-center">{{ $indexAll++ }}</td>
                                         <td class="fw-semibold">
-                                            {{ $cust->user ? $cust->user['name'] : ''}}
+                                            <a href="{{ url('customer/'.$cust['id']) }}">
+                                                {{ $cust->user ? $cust->user['name'] : ''}}
+                                            </a>
                                         </td>
                                         <td class="d-none d-sm-table-cell">
                                             <em class="text-muted">
