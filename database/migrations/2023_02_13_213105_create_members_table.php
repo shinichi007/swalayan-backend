@@ -17,6 +17,7 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->unsignedInteger('user_id');
             $table->enum('status',['pending','regular','member','reject'])->default('pending')->nullable();
+            $table->text('reason')->nullable();
             $table->integer('code')->nullable();
             $table->integer('point');
             $table->string('nik')->unique()->index();

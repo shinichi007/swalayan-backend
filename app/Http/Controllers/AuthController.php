@@ -45,7 +45,7 @@ class AuthController extends Controller
                 userVerify::sendWA($user->phone, $text_sms);
 
                 $status_code = 404;
-                $message = 'Permintaan Lupa Password berhasil';
+                $message = 'Permintaan berhasil';
             }else{
                 $message = 'Akun tidak ditemukan';
                 $status_code = 404;

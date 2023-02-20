@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
@@ -41,12 +42,29 @@ class SettingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Setting  $setting
+     * @param  int  $setting_id
      * @return \Illuminate\Http\Response
      */
-    public function show(Setting $setting)
+    public function show($setting_id)
     {
-        //
+        if(!Cache::has(Setting::CACHE_KEY)) {
+            Cache::put(Setting::CACHE_KEY,Setting::get());
+        }
+
+        $setting = Cache::get(Setting::CACHE_KEY)[0];
+
+        $status_code = 200;
+        $message = 'List Setting';
+        $data = json_decode($setting['value']);
+        unset($data->fonnte_token);
+        $respon = [
+            'status_code' => $status_code,
+            'message' => $message,
+            'data' => $data,
+        ];
+
+        return response()->json($respon, $status_code);
+
     }
 
     /**

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -19,6 +20,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::post('/register', [AuthController::class, 'do_register']);
+Route::post('/resend-otp', [AuthController::class, 'do_forgotPassword']);
 //API route for login user
 Route::post('/login', [AuthController::class, 'do_login']);
 Route::post('/verify', [AuthController::class, 'verifyAccount']);
@@ -48,6 +50,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/account/{accountid}', [UserController::class, 'update']);
     Route::get('/account/{accountid}', [UserController::class, 'show']);
     Route::delete('/account/{accountid}', [UserController::class, 'destroy']);
+
+    Route::get('/setting/{settingid}', [SettingController::class, 'show']);
 
     // API route for logout user
     Route::post('/logout', [AuthController::class, 'logout']);

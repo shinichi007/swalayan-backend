@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
@@ -57,9 +58,17 @@ class userVerify extends Model
     }
 
     public static function sendWA($phone,$message){
-        $setting = Setting::where('name','fonnte_token')->first();
+
+        if(!Cache::has(Setting::CACHE_KEY)) {
+            Cache::put(Setting::CACHE_KEY,Setting::get());
+        }
+
+        $setting = Cache::get(Setting::CACHE_KEY)[0];
+
+        $data = json_decode($setting['value']);
+
         $response = Http::asForm()->withHeaders([
-            'Authorization' => $setting->value
+            'Authorization' => $data->fonnte_token
         ])->post('https://api.fonnte.com/send', [
             'target' => $phone,
             'message' => $message,

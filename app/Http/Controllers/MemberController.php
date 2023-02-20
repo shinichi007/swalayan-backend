@@ -111,6 +111,7 @@ class MemberController extends Controller
                 'member'  => [
                     "member_id" => $member->id,
                     "status" => $member->status,
+                    "reason" => $member->reason,
                     "code" => $member->code,
                     "point" => $member->point,
                     "data" => [

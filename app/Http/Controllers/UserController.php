@@ -110,6 +110,7 @@ class UserController extends Controller
                 $member = [
                     "member_id" => $user->member->id,
                     "status" => $user->member->status,
+                    "reason" => $user->member->reason,
                     "code" => $user->member->code,
                     "point" => $user->member->point,
                     "data" => [
@@ -173,6 +174,7 @@ class UserController extends Controller
                 $member = [
                     "member_id" => $user->member->id,
                     "status" => $user->member->status,
+                    "reason" => $user->member->reason,
                     "code" => $user->member->code,
                     "point" => $user->member->point,
                     "data" => [
