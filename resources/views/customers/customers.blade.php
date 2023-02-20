@@ -65,8 +65,9 @@
                                             <em class="text-muted">{{ $pending->user['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
-                                            <span class="badge bg-danger">
-                                                Pending</span>
+                                            <span class="badge bg-warning">
+                                                Pending
+                                            </span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -101,7 +102,8 @@
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-info">
-                                                Reguler</span>
+                                                Reguler
+                                            </span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -186,9 +188,17 @@
                                             </em>
                                         </td>
                                         <td class="text-center">
-                                            <span
-                                                class="badge {{ $cust['status'] === 'member' ? 'bg-success' : ($cust['status'] === 'pending' ? 'bg-danger' : 'bg-info') }}">
-                                                {{ $cust['status'] === 'member' ? 'Member' : ($cust['status'] === 'pending' ? 'Pending' : 'Reguler') }}</span>
+                                            @if($cust['status'] == 'reject')
+                                                <span class="badge bg-danger">
+                                            @elseif($cust['status'] == 'member')
+                                                <span class="badge bg-success">
+                                            @elseif($cust['status'] == 'pending')
+                                                <span class="badge bg-warning">
+                                            @elseif($cust['status'] == 'info')
+                                                <span class="badge bg-info">
+                                            @endif
+                                                {{ $cust['status'] }}
+                                            </span>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
                                             <em class="text-muted">{{ $cust['point'] }}</em>

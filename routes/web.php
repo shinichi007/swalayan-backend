@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/customer/{id}/delete', [CustomerController::class, 'delete_customer']);
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::post('/profile', [ProfileController::class, 'update']);
+    Route::post('/setting/{setting_id}', [SettingController::class, 'update']);
     Route::get('/change-password', [ProfileController::class, 'change_password']);
     Route::post('/change-password', [ProfileController::class, 'do_change_password']);
     Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');
