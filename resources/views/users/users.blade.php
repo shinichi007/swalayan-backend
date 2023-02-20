@@ -78,11 +78,10 @@
                                         <td class="text-center">
                                             @if($admin->role == 'admin')
                                                 <div class="btn-group" bis_skin_checked="1">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-block-fromright">
+                                                    <a href="{{ URL('/users/'.$admin->id.'/edit') }}"
+                                                        class="btn btn-sm btn-alt-secondary">
                                                         <i class="fa fa-pencil-alt"></i>
-                                                    </button>
+                                                    </a>
                                                     <button type="button"
                                                         class="btn btn-sm btn-alt-secondary js-swal-confirm">
                                                         <i class="fa fa-times"></i>
@@ -134,17 +133,18 @@
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <div class="btn-group" bis_skin_checked="1">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-alt-secondary" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-block-fromright">
-                                                    <i class="fa fa-pencil-alt"></i>
-                                                </button>
-                                                <button type="button"
-                                                    class="btn btn-sm btn-alt-secondary js-swal-confirm">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </div>
+                                            @if($operator->role == 'admin')
+                                                <div class="btn-group" bis_skin_checked="1">
+                                                    <a href="{{ URL('/users/'.$operator->id.'/edit') }}"
+                                                        class="btn btn-sm btn-alt-secondary">
+                                                        <i class="fa fa-pencil-alt"></i>
+                                                    </a>
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-alt-secondary js-swal-confirm">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -156,59 +156,6 @@
             </div>
         </div>
     </main>
-    <div class="modal fade" id="modal-block-fromright" tabindex="-1" role="dialog" aria-labelledby="modal-block-fromright"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-fromright" role="document">
-            <div class="modal-content">
-                <div class="block block-rounded block-themed block-transparent mb-0">
-                    <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">Tambah User</h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-fw fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="block-content">
-                        <div class="mb-4" bis_skin_checked="1">
-                            <label class="form-label" for="example-text-input">Nama</label>
-                            <input type="text" class="form-control" id="example-text-input" name="name"
-                                placeholder="Masukan Nama Lengkap">
-                        </div>
-                        <div class="mb-4" bis_skin_checked="1">
-                            <label class="form-label" for="example-text-input">Email</label>
-                            <input type="email" class="form-control" id="example-text-input" name="email"
-                                placeholder="Masukan Email" required>
-                        </div>
-                        <div class="mb-4" bis_skin_checked="1">
-                            <label class="form-label" for="example-text-input">Nomor HP</label>
-                            <input type="text" class="form-control" id="example-text-input" name="phone"
-                                placeholder="Masukan Nomor HP Lengkap" required>
-                        </div>
-                        <div class="mb-4" bis_skin_checked="1">
-                            <label class="form-label" for="example-text-input">Password</label>
-                            <input type="password" class="form-control" id="example-text-input" name="password"
-                                placeholder="Masukan Password" required>
-                        </div>
-                        <div class="mb-4" bis_skin_checked="1">
-                            <label class="form-label" for="example-select">Role</label>
-                            <select class="form-select" id="example-select" name="role" required>
-                                <option selected="">-- Pilih Role --</option>
-                                <option value="admin">Admin</option>
-                                <option value="operator">Operator</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="block-content block-content-full text-end bg-body">
-                        <button type="button" class="btn btn-sm btn-alt-secondary"
-                            data-bs-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-sm btn-primary js-swal-success"
-                            data-bs-dismiss="modal">Tambah</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('custom_js')

@@ -35,14 +35,15 @@ class UserController extends Controller
                 }else{
                     Session::flush();
                     Auth::logout();
-                    return redirect()->intended('login')
-                            ->with('error','Kamu tidak memiliki akses');
+
+                    return redirect()->intended('/')->withErrors(['msg' => 'Kamu tidak memiliki akses']);
                 }
+            }else{
+                return redirect()->intended('/')->withErrors(['msg' => 'Email atau Password Salah']);
             }
         }
         catch(\Exception $e){
-            return redirect()->route('login')
-              ->with('error','Email atau Password tidak benar.');
+            return redirect()->intended('/')->withErrors(['msg' => $e->getMessage()]);
         }
 
     }
@@ -440,5 +441,57 @@ class UserController extends Controller
         ];
 
         return response()->json($respon, $status_code);
+    }
+
+    /**
+     * Show the form for updating resource.
+     *
+     * @param  int  $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($user_id) {
+        if(!Cache::has(Member::CACHE_KEY)){
+            Member::cache_warming();
+        }
+
+        return view('users/edit-user',[
+            'title' => 'Edit User',
+            'user' => User::find($user_id),
+            'countPending' => Cache::get(Member::CACHE_KEY.'_count'),
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  int  $user_id
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_user(Request $request, $user_id)
+    {
+
+        $this->validate($request, [
+            'profile_pic' => 'file|image|mimes:jpeg,png,jpg,png,svg|max:2048',
+            'name' => 'required',
+        ]);
+
+        $user = User::where('id',Auth::id())->first();
+
+        if($request->file('profile_pic')){
+            $image_path = $request->file('profile_pic')->store('image', 'public');
+            $user->avatar = $image_path;
+        }
+
+        try{
+            $user->name = $request->name;
+            $user->save();
+
+            return redirect()->back();
+        }
+        catch(\Exception $e){
+            return redirect()->back()
+                ->withErrors(['msg' => $e->getMessage()]);
+        }
     }
 }

@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Session;
 
 Route::get('/', [UserController::class, 'login']);
 Route::get('/login', [UserController::class, 'login'])->name('login');
-Route::post('/login', [UserController::class, 'do_login'])->name('login.submit');
+Route::post('/login', [UserController::class, 'do_login'])->name('login');
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');
     Route::get('/users/create', [UserController::class, 'create'])->name('dashboard.user.create');
     Route::post('/users/create', [UserController::class, 'create_user'])->name('dashboard.user_create');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('dashboard.user.edit');
+    Route::post('/users/{id}/edit', [UserController::class, 'edit_user'])->name('dashboard.user_edit');
     Route::get('/logs', [DashboardController::class, 'logs']);
     Route::get('/logout', function () {
         Session::flush();
