@@ -5,6 +5,7 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Models\Audit;
 
 class CustomerController extends Controller
 {
@@ -29,8 +30,16 @@ class CustomerController extends Controller
             Member::cache_warming();
         }
 
+        $audits = Audit::with('user')
+            ->where('auditable_id',$customer_id)
+            ->where('user_id','>',0)
+            ->where('old_values','LIKE', '%point%')
+            ->where('auditable_type','App\Models\Member')
+            ->orderBy('created_at', 'desc')->get();
+
         return view('customers/detail-customer',[
             'title' => 'Detail Customer',
+            'audits' => $audits,
             'customer' => Member::find($customer_id),
             'countPending' => Cache::get(Member::CACHE_KEY.'_count')
         ]);

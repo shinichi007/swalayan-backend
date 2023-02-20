@@ -140,18 +140,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center"><em class="text-muted">02-02-2023</em>
-                                    </td>
-                                    <td class="fw-semibold text-center">
-                                        <a href="#">Abdul Mutohir</a>
-                                    </td>
-                                    <td class="text-center">Operator</td>
-                                    <td class="text-center">0
-                                    </td>
-                                    <td class="text-center">{{ $customer['point'] }}
-                                    </td>
-                                </tr>
+                                @if(count($audits) > 0)
+                                    @foreach($audits as $key => $audit)
+                                        <tr>
+                                            <td class="text-center">
+                                                <em class="text-muted">
+                                                    {{ $audit->created_at->format('d-m-Y') }}
+                                                </em>
+                                            </td>
+                                            <td class="fw-semibold text-center">
+                                                {{ $audit->user ? $audit->user['name'] : ''  }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $audit->user ? $audit->user['role'] : ''  }}
+                                            </td>
+                                            <td class="text-center">
+                                                @foreach($audit->old_values as $attribute => $value)
+                                                    {{ $value }}
+                                                @endforeach
+                                            </td>
+                                            <td class="text-center">
+                                                @foreach($audit->new_values as $attribute => $value)
+                                                    {{ $value }}
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
