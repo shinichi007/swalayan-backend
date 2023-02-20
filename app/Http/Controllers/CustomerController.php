@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class CustomerController extends Controller
@@ -14,12 +15,12 @@ class CustomerController extends Controller
         }
 
         return view('customers/customers',[
-            'title' => 'Customer',
-            'regulars' => Member::where('status','regular')->get(),
-            'customers' => Cache::get(Member::CACHE_KEY),
-            'members' => Member::where('status','member')->get(),
-            'pendings' => Member::where('status','pending')->get(),
-            'countPending' => Cache::get(Member::CACHE_KEY.'_count')
+            'title'         => 'Customer',
+            'regulars'      => Member::where('status','regular')->get(),
+            'customers'     => Member::get(),
+            'members'       => Member::where('status','member')->get(),
+            'pendings'      => Member::where('status','pending')->get(),
+            'countPending'  => Cache::get(Member::CACHE_KEY.'_count')
         ]);
     }
 
@@ -103,6 +104,28 @@ class CustomerController extends Controller
         catch(\Exception $e){
             return redirect()->intended('customer/edit/'.$customer_id)
                                 ->with('error','update data gagal');
+        }
+    }
+
+
+    public function delete_customer($customer_id){
+        try{
+            $user = Auth::user();
+            $member = Member::where('id',$customer_id)->first();
+            if(in_array($user->role,['admin','operator'])){
+                $c_user = $member->user;
+
+                foreach($c_user->addresses as $address){
+                    $address->delete();
+                }
+
+                $member->delete();
+                $c_user->delete();
+            }
+            return redirect()->intended('/customers');
+        }
+        catch(\Exception $e){
+            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
         }
     }
 }

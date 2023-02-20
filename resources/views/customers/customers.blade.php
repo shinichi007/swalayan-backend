@@ -171,12 +171,19 @@
                                     <tr>
                                         <td class="text-center">{{ $indexAll++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="{{ url('customer/'.$cust['id']) }}">{{ $cust->user['name'] }}</a>
+                                            <a href="{{ url('customer/'.$cust['id']) }}">
+                                                {{ $cust->user ? $cust->user['name'] : ''}}
+                                            </a>
                                         </td>
-                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $cust->user['email'] }}</em>
+                                        <td class="d-none d-sm-table-cell">
+                                            <em class="text-muted">
+                                                {{ $cust->user ? $cust->user['email'] : ''}}
+                                            </em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $cust->user['phone'] }}</em>
+                                            <em class="text-muted">
+                                                {{ $cust->user ? $cust->user['phone'] : '' }}
+                                            </em>
                                         </td>
                                         <td class="text-center">
                                             <span

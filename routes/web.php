@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/customer/{id}/verification', [CustomerController::class, 'do_verify_customer']);
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit_customer']);
     Route::post('/customer/{id}/edit', [CustomerController::class, 'do_update_customer']);
+    Route::get('/customer/{id}/delete', [CustomerController::class, 'delete_customer']);
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::post('/profile', [ProfileController::class, 'update']);
     Route::get('/change-password', [ProfileController::class, 'change_password']);

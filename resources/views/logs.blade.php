@@ -18,8 +18,8 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tanggal</th>
-                                <th class="text-center">Nama User</th>
-                                <th class="text-center">Role</th>
+                                <th class="text-center">Nama</th>
+                                <th class="text-center">Event</th>
                                 <th class="text-center">Data Sebelum</th>
                                 <th class="text-center">Data Sesudah</th>
                             </tr>
@@ -35,10 +35,14 @@
                                     </td>
                                     <td class="fw-semibold">
                                         {{ $audit->user ? $audit->user['name'] : ''  }}
+                                        <em class="text-muted">
+                                            -
+                                            {{ $audit->user ? $audit->user['role'] : ''  }}
+                                        </em>
                                     </td>
                                     <td class="text-center">
                                         <em class="text-muted">
-                                            {{ $audit->user ? $audit->user['role'] : ''  }}
+                                            {{ $audit->event  }}
                                         </em>
                                     </td>
                                     <td>

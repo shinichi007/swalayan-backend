@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-6">
                     <a class="js-swal-confirm block block-rounded block-link-shadow text-center h-100 mb-0"
-                        href="{{ URL('/customer/delete/'.$customer['id']) }}" id="delete-customer" data-value="{{ $customer['id'] }}">
+                        href="{{ URL('/customer/'.$customer['id'].'/delete') }}">
                         <div class="block-content py-5">
                             <div class="fs-3 fw-semibold text-danger mb-1">
                                 <i class="fa fa-times"></i>
@@ -63,8 +63,16 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="block-content bg-body-light text-center">
                     <div class="row items-push">
+                        @if(count($errors) > 0)
+                            <div class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                {{ $error }} <br/>
+                                @endforeach
+                            </div>
+                        @endif
                         <div class="col-6 col-md-3">
                             <div class="fw-semibold text-dark mb-1">Email</div>
                             <a class="link-fx" href="javascript:void(0)">{{ $customer->user['email'] }}</a>

@@ -21,15 +21,15 @@ class Member extends Model implements Auditable
      */
     protected static function booted()
     {
-        static::created(function ($menu) {
+        static::created(function ($member) {
             self::cache_warming();
         });
 
-        static::updated(function ($menu){
+        static::updated(function ($member){
             self::cache_warming();
         });
 
-        static::deleted(function($menu){
+        static::deleted(function($member){
             self::cache_warming();
         });
     }
@@ -63,9 +63,6 @@ class Member extends Model implements Auditable
     }
 
     public static function cache_warming() {
-        Cache::forget(Member::CACHE_KEY);
-        Cache::put(Member::CACHE_KEY, Member::get());
-
         Cache::forget(Member::CACHE_KEY.'_count');
         Cache::put(Member::CACHE_KEY.'_count', Member::where('status','pending')->get()->count());
     }

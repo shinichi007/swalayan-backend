@@ -90,17 +90,17 @@
                                     <tr>
                                         <td>
                                             <span class="fw-semibold">
-                                                {{ $customer->user['name'] }}
+                                                {{ $customer->user ? $customer->user['name'] : '' }}
                                             </span>
                                         </td>
                                         <td class="d-none d-xl-table-cell">
                                             <span class="fs-sm text-muted">
-                                                {{ $customer->user['email'] }}
+                                                {{ $customer->user ? $customer->user['email'] : '' }}
                                             </span>
                                         </td>
                                         <td>
                                             <span class="fw-semibold text-warning">
-                                                {{ $customer->user['phone'] }}
+                                                {{ $customer->user ? $customer->user['phone'] : '' }}
                                             </span>
                                         </td>
                                         <td class="text-center text-nowrap fw-medium">
@@ -165,7 +165,7 @@
                                         </span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-end fw-medium">
-                                        {{ $member->user['point'] }}
+                                        {{ $member['point'] }}
                                     </td>
                                     <td class="text-center text-nowrap fw-medium">
                                         <a href="{{ url('/customer/'.$member['id']) }}">

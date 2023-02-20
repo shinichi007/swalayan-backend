@@ -21,15 +21,15 @@ class Setting extends Model implements Auditable
      */
     protected static function booted()
     {
-        static::created(function ($menu) {
+        static::created(function ($setting) {
             self::cache_warming();
         });
 
-        static::updated(function ($menu){
+        static::updated(function ($setting){
             self::cache_warming();
         });
 
-        static::deleted(function($menu){
+        static::deleted(function($setting){
             self::cache_warming();
         });
     }
