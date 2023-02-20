@@ -20,28 +20,44 @@
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Nama User</th>
                                 <th class="text-center">Role</th>
-                                <th class="text-center">Keterangan</th>
+                                <th class="text-center">Data Sebelum</th>
+                                <th class="text-center">Data Sesudah</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        @foreach($audits as $key => $audit)
+                            <tbody>
                                 <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">10-02-2023</td>
-                                    <td class="fw-semibold">Udin</td>
-                                    <td class="text-center"><em class="text-muted">Operator</em>
+                                    <td class="text-center">
+                                        {{$key+1}}
                                     </td>
-                                    <td class="text-center">Edit Member Zulfa Hassanah</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td class="text-center">11-02-2023</td>
-                                    <td class="fw-semibold">Umar</td>
-                                    <td class="text-center"><em class="text-muted">Operator</em>
+                                    <td class="text-center">
+                                        {{ $audit->created_at->format('d-m-Y') }}
                                     </td>
-                                    <td class="text-center">Edit Poin Zulfa Hassanah</td>
+                                    <td class="fw-semibold">
+                                        {{ $audit->user ? $audit->user['name'] : ''  }}
+                                    </td>
+                                    <td class="text-center">
+                                        <em class="text-muted">
+                                            {{ $audit->user ? $audit->user['role'] : ''  }}
+                                        </em>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                        @foreach($audit->old_values as $attribute => $value)
+                                            <li>{{ $attribute }} : {{ $value }}</li>
+                                        @endforeach
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                        @foreach($audit->new_values as $attribute => $value)
+                                            <li>{{ $attribute }} : {{ $value }}</li>
+                                        @endforeach
+                                        </ul>
+                                    </td>
                                 </tr>
-
-                        </tbody>
+                            </tbody>
+                        @endforeach
                     </table>
                 </div>
             </div>

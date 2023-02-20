@@ -8,7 +8,7 @@
             <div class="block-content">
                 <div class="py-5 text-center">
                     <img class="img-avatar img-avatar96 img-avatar-thumb" src="{{ Storage::url($customer->user['avatar']) }}">
-                    <h1 class="fw-bold my-2 text-primary-dark">Edit Customer</h1>
+                    <h1 class="fw-bold my-2 text-primary-dark">Ubah Data Pelanggan</h1>
                     <h2 class="h4 fw-bold text-primary-dark">
                         {{ $customer->user['name'] }}
                     </h2>
@@ -17,7 +17,8 @@
                         Kembali
                     </a>
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+                <form action="{{ URL('/customer/'.$customer['id'].'/edit') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <!-- User Profile -->
                     <h2 class="content-heading pt-0">
                         <i class="fa fa-fw fa-user-circle text-muted me-1"></i>
@@ -48,7 +49,7 @@
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="dm-profile-edit-company">Poin Member</label>
-                            <input type="text" class="form-control" id="dm-profile-edit-company" name="point" value="{{ $customer['point'] }}" @if($customer['status'] == 'member') ? '' : 'disabled' @endif>
+                            <input type="number" class="form-control" id="dm-profile-edit-company" name="point" value="{{ $customer['point'] }}" @if($customer['status'] == 'member') ? '' : 'disabled' @endif>
                         </div>
                         </div>
                     </div>

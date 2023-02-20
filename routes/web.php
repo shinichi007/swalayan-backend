@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/customer/{id}/verification', [CustomerController::class, 'verify_customer']);
     Route::post('/customer/{id}/verification', [CustomerController::class, 'do_verify_customer']);
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit_customer']);
+    Route::post('/customer/{id}/edit', [CustomerController::class, 'do_update_customer']);
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');
     Route::get('/logs', [DashboardController::class, 'logs']);

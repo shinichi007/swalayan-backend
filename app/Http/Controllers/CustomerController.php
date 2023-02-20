@@ -81,4 +81,28 @@ class CustomerController extends Controller
             'countPending' => Cache::get(Member::CACHE_KEY.'_count')
         ]);
     }
+
+    public function do_update_customer(Request $request, $customer_id) {
+        try{
+            request()->validate([
+                'name' => 'required|string',
+                'point'  => 'required|integer'
+            ]);
+
+            $member = Member::find($customer_id);
+            $user = $member->user;
+            $user->name = $request->name;
+            $user->save();
+
+            $member->point = $request->point;
+            $member->save();
+
+            return redirect()->intended('customer/edit/'.$customer_id)
+                                ->withSuccess('update data berhasil');
+        }
+        catch(\Exception $e){
+            return redirect()->intended('customer/edit/'.$customer_id)
+                                ->with('error','update data gagal');
+        }
+    }
 }
