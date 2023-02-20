@@ -74,9 +74,9 @@
                             <a class="link-fx" href="javascript:void(0)">{{ $customer->user['phone'] }}</a>
                         </div>
                         <div class="col-6 col-md-3">
-                            <div class="fw-semibold text-dark mb-1">Gender</div>{{ $customer->user['gender'] }}
+                            <div class="fw-semibold text-dark mb-1">Gender</div>
                             <a class="link-fx" href="javascript:void(0)">
-                                {{ $customer->user['gender'] == 'm' ? 'Laki-Laki' : 'Perempuan' }}
+                                {{ ($customer->user['gender'] == 'm') ? 'Laki-Laki' : 'Perempuan' }}
                             </a>
                         </div>
                         <div class="col-6 col-md-3">
@@ -202,7 +202,7 @@
                                                         </td>
                                                         <td>:</td>
                                                         <td>
-                                                            <span>{{ $customer['ktp_gender'] == 'm' ? 'Laki-Laki' : 'Perempuan' }}</span>
+                                                            <span>{{ ($customer['ktp_gender'] == 'm') ? 'Laki-Laki' : 'Perempuan' }}</span>
                                                         </td>
                                                     </tr>
                                                     <tr>
