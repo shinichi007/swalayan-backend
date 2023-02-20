@@ -60,12 +60,12 @@ class CustomerController extends Controller
                 $member->reason = $request->reason;
             $member->save();
 
-            return redirect()->intended('customer')
-                                ->withSuccess('login berhasil');
+            return redirect()->intended('customers')
+                                ->withSuccess('verifikasi berhasil');
         }
         catch(\Exception $e){
-            return redirect()->intended('customer')
-                                ->withSuccess('login berhasil');
+            return redirect()->intended('customer/'.$customer_id)
+                                ->with('error','verifikasi gagal');
         }
     }
 
