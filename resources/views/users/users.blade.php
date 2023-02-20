@@ -30,10 +30,10 @@
                     </li>
                     <li class="nav-item ms-auto">
                         <div class="btn-group btn-group-sm pe-2">
-                            <button type="button" class="btn btn-alt-secondary" data-bs-toggle="modal"
-                                data-bs-target="#modal-block-fromright">
-                                <i class="fa fa-fw fa-add"></i> Tambah
-                            </button>
+                            <a href="{{ URL('/users/create') }}" class="btn btn-alt-secondary">
+                                <i class="fa fa-fw fa-add"></i>
+                                Tambah
+                            </a>
                         </div>
                     </li>
                 </ul>

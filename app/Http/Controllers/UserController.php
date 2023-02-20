@@ -5,6 +5,7 @@ use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -46,8 +47,55 @@ class UserController extends Controller
 
     }
 
-    public function register(Request $request) {
-        return view('register');
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create() {
+        if(!Cache::has(Member::CACHE_KEY)){
+            Member::cache_warming();
+        }
+
+        return view('users/create-user',[
+            'title' => 'Tambah User',
+            'countPending' => Cache::get(Member::CACHE_KEY.'_count'),
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create_user(Request $request)
+    {
+        try{
+            request()->validate([
+                'profile_pic'   => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'name'          => 'required|string|max:255',
+                'role'          => 'required|string|max:10',
+                'phone'         => 'required|string|min:8|max:18|unique:users',
+                'email'         => 'required|string|email|max:255|unique:users',
+                'password'      => 'required|string|min:6',
+                'password_confirmation' => 'required_with:password|same:password|min:6'
+            ]);
+
+            $image_path = $request->file('profile_pic')->store('image', 'public');
+            $request->request->add([
+                'avatar' => $image_path,
+            ]);
+
+            User::create($request->all());
+
+            return redirect()->intended('users')
+                                ->withSuccess('Tambah user berhasil');
+        }
+        catch(\Exception $e){
+            return redirect()->intended('users/create')
+                ->withErrors(['msg' => $e->getMessage()]);
+        }
     }
 
     public function forgotPassword(Request $request) {

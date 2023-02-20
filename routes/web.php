@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/change-password', [ProfileController::class, 'change_password']);
     Route::post('/change-password', [ProfileController::class, 'do_change_password']);
     Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');
+    Route::get('/users/create', [UserController::class, 'create'])->name('dashboard.user.create');
+    Route::post('/users/create', [UserController::class, 'create_user'])->name('dashboard.user_create');
     Route::get('/logs', [DashboardController::class, 'logs']);
     Route::get('/logout', function () {
         Session::flush();
