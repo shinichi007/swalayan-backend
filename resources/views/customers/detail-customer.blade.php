@@ -53,8 +53,9 @@
                             <p class="text-muted">
                                 Pending
                             </p>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#modal-block-slideup">Verifikasi Identitas</button>
+                            <a class="btn btn-danger" href="{{ URL('/customer/'.$customer['id'].'/verification') }}">
+                                Verifikasi Identitas
+                            </a>
                         @else
                             <p class="text-muted">
                                 Reguler
@@ -149,7 +150,7 @@
                 </div>
             @endif
         </div>
-        @if ($customer['status'] == 'member' || $customer['status'] == 'pending')
+        @if ($customer['status'] != 'pending')
             <div class="modal fade" id="modal-block-slideup" tabindex="-1" role="dialog"
                 aria-labelledby="modal-block-slideup" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-slideup" role="document">
@@ -157,7 +158,7 @@
                         <div class="block block-rounded block-themed block-transparent mb-0">
                             <div class="block-header bg-primary-dark">
                                 <h3 class="block-title">
-                                    {{ $customer['status'] === 'pending' ? 'Verifikasi Identitas' : 'Data Identitas' }}
+                                    {{ 'Data Identitas' }}
                                 </h3>
                                 <div class="block-options">
                                     <button type="button" class="btn-block-option" data-bs-dismiss="modal"
@@ -225,25 +226,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        @if ($customer['status'] == 'pending')
-                                            <div id="verifikasi">
-                                                <div class="mb-4">
-                                                    <select class="js-select2 form-select" style="width: 100%;"
-                                                        data-container="#modal-block-slideup"
-                                                        data-placeholder="Pilih Status">
-                                                        <option></option>
-                                                        <option value="member">Approve</option>
-                                                        <option value="reject">Reject</option>
-                                                    </select>
-                                                </div>
-                                                <input type="text" class="form-control" id="example-text-input"
-                                                    name="example-text-input"
-                                                    placeholder="Keterangan (Opsional) Cth. Foto KTP Tidak Jelas">
-                                                <br>
-                                                <button type="button" class="btn btn-sm btn-primary"
-                                                    data-bs-dismiss="modal">Submit</button>
-                                            </div>
-                                        @endif
                                     </div>
                                 </div>
                             </div>

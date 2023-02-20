@@ -35,7 +35,7 @@ class UserController extends Controller
                     Session::flush();
                     Auth::logout();
                     return redirect()->intended('login')
-                            ->withSuccess('Kamu tidak memiliki akses');
+                            ->with('error','Kamu tidak memiliki akses');
                 }
             }
         }

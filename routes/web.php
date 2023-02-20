@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/customers', [CustomerController::class, 'index'])->name('dashboard.customer');
     Route::get('/customer/{id}', [CustomerController::class, 'detail_customer']);
+    Route::get('/customer/{id}/verification', [CustomerController::class, 'verify_customer']);
+    Route::post('/customer/{id}/verification', [CustomerController::class, 'do_verify_customer']);
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit_customer']);
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::get('/users', [DashboardController::class, 'list_user'])->name('dashboard.user');

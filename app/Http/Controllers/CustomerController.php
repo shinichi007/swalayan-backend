@@ -35,6 +35,40 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function verify_customer($customer_id) {
+        if(!Cache::has(Member::CACHE_KEY)){
+            Member::cache_warming();
+        }
+
+        return view('customers/verify-customer',[
+            'title' => 'Verify Customer',
+            'customer' => Member::find($customer_id),
+            'countPending' => Cache::get(Member::CACHE_KEY.'_count')
+        ]);
+    }
+
+    public function do_verify_customer(Request $request, $customer_id) {
+        try{
+            request()->validate([
+                'status'         => 'required|string',
+            ]);
+
+            $member = Member::find($customer_id);
+            $member->nik = '';
+            $member->status = $request->status;
+            if($request->reason)
+                $member->reason = $request->reason;
+            $member->save();
+
+            return redirect()->intended('customer')
+                                ->withSuccess('login berhasil');
+        }
+        catch(\Exception $e){
+            return redirect()->intended('customer')
+                                ->withSuccess('login berhasil');
+        }
+    }
+
     public function edit_customer($customer_id) {
         if(!Cache::has(Member::CACHE_KEY)){
             Member::cache_warming();
