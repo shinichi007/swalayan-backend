@@ -41,7 +41,6 @@ class MemberController extends Controller
     {
         $uid = Auth::id();
         $request->request->add([
-            'user_id' => $uid,
             'status' => 'pending'
         ]);
 
@@ -64,14 +63,15 @@ class MemberController extends Controller
             ]);
 
             $user = User::where('id',$uid)->first();
-            $user->role = 'member';
+            $user->gender = $request->ktp_gender;
             $user->save();
 
-            Member::create($request->all());
+            $member = Member::where('user_id',$uid)->first();;
+            $member->update($request->all());
 
             $status_code = 200;
             $message = 'Create Member Success';
-            $data = Member::where('user_id',$uid)->get();
+            $data = Member::where('user_id',$uid)->first();
         }
         catch(\Exception $e){
             $status_code = 400;

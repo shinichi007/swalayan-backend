@@ -31,8 +31,8 @@ class UserController extends Controller
             if (Auth::attempt($credentials)) {
                 if(in_array(Auth::user()->role,['admin','operator'])){
                     $user = User::where('id',Auth::id())->first();
-                    if(is_null($user->remember_token)){
-                        $user->remember_token = $user->createToken('auth_token')->plainTextToken;
+                    if(is_null($user->active_token)){
+                        $user->active_token = $user->createToken('auth_token')->plainTextToken;
                         $user->save();
                         return redirect()->intended('dashboard')
                             ->withSuccess('login berhasil');

@@ -83,23 +83,26 @@
                                                 @csrf
                                                 <div id="verifikasi">
                                                     <div class="mb-4">
-                                                        <select class="form-select" style="width: 100%;"
-                                                            data-container="#modal-block-slideup"
+                                                        <select class="status form-select" style="width: 100%;"
+                                                            onchange="statusCheck(this.select);"
                                                             data-placeholder="Pilih Status" name="status" required>
-                                                            <option></option>
+                                                            <option>Pilih Status</option>
                                                             <option value="member">Approve</option>
                                                             <option value="reject">Reject</option>
                                                         </select>
                                                     </div>
-                                                    <input type="text" class="form-control" id="example-text-input"
+                                                    <input type="text" class="form-control" id="reason"
                                                         name="reason"
                                                         placeholder="Keterangan (Opsional) Cth. Foto KTP Tidak Jelas"
-                                                        >
+                                                        style="display: none;">
+                                                    <input type="number" class="code form-control" min='1000000000' max='999999999999'
+                                                        name="code" id="code"
+                                                        placeholder="1235xxxxxxxx" style="display: none;">
                                                     <br>
                                                     <div class="row push">
                                                         <div class="col-lg-8 col-xl-5 offset-lg-4">
                                                         <div class="mb-4">
-                                                            <button type="submit" class="btn btn-primary">
+                                                            <button type="submit" class="btn btn-primary" id="verifikasi">
                                                                 Verifikasi
                                                             </button>
                                                         </div>
@@ -120,5 +123,30 @@
 @endsection
 
 @section('custom_js')
+<script>
+    $(document).ready(function(){
+        $("select.status").change(function() {
+            val = $(this).val();
+            if(val=='member'){
+                $('#code').show();
+                $('#reason').hide();
+                $('#code').attr("required", true);
+                $('#reason').attr("required", false);
+            }
+            if(val=='reject'){
+                $('#code').hide();
+                $('#reason').show();
+                $('#code').attr("required", false);
+                $('#reason').attr("required", true);
+            }
+            if(val==0){
+                $('#code').hide();
+                $('#reason').hide();
+                $('#code').attr("required", false);
+                $('#reason').attr("required", false);
+            }
+        });
+    });
+</script>
 <script src="{{ asset('assets/js/pages/edit_customer_dialog.min.js') }}"></script>
 @endsection

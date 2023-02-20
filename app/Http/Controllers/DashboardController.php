@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
         return view('dashboard', [
             'title' => 'Beranda',
-            'customers' => User::where('role','regular')->get(),
+            'customers' => Member::where('status','regular')->orWhere('status','pending')->get(),
             'members' => Member::where('status','member')->get(),
             'countPending' => Cache::get(Member::CACHE_KEY.'_count')
         ]);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -126,6 +127,13 @@ class AuthController extends Controller
                 'password'  => Hash::make($request->password)
              ]);
 
+            Member::create([
+                'user_id' => $user->id,
+                'nik' => $request->phone,
+                'ktp_name' => $request->name,
+                'status' => 'regular'
+            ]);
+
             $status_code = 200;
             $message = 'Register Success';
             $data = null;
@@ -143,7 +151,7 @@ class AuthController extends Controller
 
             userVerify::sendMail($user->email, $otp, $expired_time);
             $text_sms = 'Kode OTP : '.$otp.' berlaku sampai '.$expired_time;
-            userVerify::sendWA($user->phone, $text_sms);
+            // userVerify::sendWA($user->phone, $text_sms);
 
         }
         catch(\Exception $e){

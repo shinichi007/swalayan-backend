@@ -100,17 +100,17 @@
                                     <tr>
                                         <td class="text-center">{{ $indexRegular++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="{{ url('/users/'.$reg['id'].'/edit') }}">
-                                                {{ $reg['name'] }}
+                                            <a href="{{ url('/customer/'.$reg['id']) }}">
+                                                {{ $reg->user['name'] }}
                                             </a>
                                         </td>
                                         <td class="d-none d-sm-table-cell">
                                             <em class="text-muted">
-                                                {{ $reg['email'] }}
+                                                {{ $reg->user['email'] }}
                                             </em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $reg['phone'] }}</em>
+                                            <em class="text-muted">{{ $reg->user['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-info">
@@ -155,10 +155,14 @@
                                                 Member</span>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $member['id'] }}</em>
+                                            <em class="text-muted">
+                                                {{ $member['code'] ? $member['code'] : '-' }}
+                                            </em>
                                         </td>
                                         <td class="text-center">
-                                            <em class="text-muted">{{ $member['point'] }}</em>
+                                            <em class="text-muted">
+                                            {{ $member['point'] ? $member['point'] : 0 }}
+                                            </em>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -206,14 +210,16 @@
                                                 <span class="badge bg-success">
                                             @elseif($cust['status'] == 'pending')
                                                 <span class="badge bg-warning">
-                                            @elseif($cust['status'] == 'info')
+                                            @elseif($cust['status'] == 'regular')
                                                 <span class="badge bg-info">
                                             @endif
                                                 {{ $cust['status'] }}
                                             </span>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $cust['point'] }}</em>
+                                            <em class="text-muted">
+                                                {{ $cust['point'] ? $cust['point'] : 0 }}
+                                            </em>
                                         </td>
                                     </tr>
                                 @endforeach

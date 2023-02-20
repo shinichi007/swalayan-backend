@@ -90,21 +90,21 @@
                                     <tr>
                                         <td>
                                             <span class="fw-semibold">
-                                                {{ $customer['name'] }}
+                                                {{ $customer->user['name'] }}
                                             </span>
                                         </td>
                                         <td class="d-none d-xl-table-cell">
                                             <span class="fs-sm text-muted">
-                                                {{ $customer['email'] }}
+                                                {{ $customer->user['email'] }}
                                             </span>
                                         </td>
                                         <td>
                                             <span class="fw-semibold text-warning">
-                                                {{ $customer['phone'] }}
+                                                {{ $customer->user['phone'] }}
                                             </span>
                                         </td>
                                         <td class="text-center text-nowrap fw-medium">
-                                            <a href="{{ url('/users/'.$customer['id'].'/edit') }}">
+                                            <a href="{{ url('/customer/'.$customer['id']) }}">
                                                 Lihat
                                             </a>
                                         </td>

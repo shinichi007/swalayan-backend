@@ -19,13 +19,13 @@ class CreateMembersTable extends Migration
             $table->enum('status',['pending','regular','member','reject'])->default('pending')->nullable();
             $table->text('reason')->nullable();
             $table->integer('code')->nullable();
-            $table->integer('point');
+            $table->integer('point')->nullable();
             $table->string('nik')->unique()->index();
             $table->string('ktp_name');
-            $table->string('ktp_img');
+            $table->string('ktp_img')->nullable();
             $table->enum('ktp_gender',['f','m'])->nullable();
-            $table->string('ktp_dob');
-            $table->text('ktp_address');
+            $table->string('ktp_dob')->nullable();
+            $table->text('ktp_address')->nullable();
             $table->timestamps();
         });
     }

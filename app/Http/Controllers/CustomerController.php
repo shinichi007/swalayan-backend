@@ -18,8 +18,8 @@ class CustomerController extends Controller
 
         return view('customers/customers',[
             'title'         => 'Customer',
-            'regulars'      => User::where('role','regular')->get(),
-            'customers'     => Member::where('status','!=','reject')->get(),
+            'regulars'      => Member::where('status','regular')->get(),
+            'customers'     => Member::get(),
             'members'       => Member::where('status','member')->get(),
             'pendings'      => Member::where('status','pending')->get(),
             'countPending'  => Cache::get(Member::CACHE_KEY.'_count')
@@ -61,16 +61,23 @@ class CustomerController extends Controller
     public function do_verify_customer(Request $request, $customer_id) {
         try{
             request()->validate([
-                'status'         => 'required|string',
+                'status' => 'required|string',
             ]);
 
             $member = Member::find($customer_id);
-            $member->status = $request->status;
             if($request->status == 'reject'){
-                $member->nik = 'NIK-'.$customer_id;
+
+                $member->status = 'pending';
                 $member->reason = $request->reason;
+                $member->code   = '';
+                $member->save();
+
+            }elseif($request->status == 'member'){
+                $member->status = 'member';
+                $member->reason = '';
+                $member->code   = $request->code;
+                $member->save();
             }
-            $member->save();
 
             return redirect()->intended('customers')
                                 ->withSuccess('verifikasi berhasil');

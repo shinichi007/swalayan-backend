@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/logs', [DashboardController::class, 'logs']);
     Route::get('/logout', function () {
         $user = User::where('id',Auth::id())->first();
-        $user->remember_token = null;
+        $user->active_token = NULL;
         $user->save();
         Session::flush();
         Auth::logout();

@@ -46,7 +46,7 @@
                                 <i class="fa fa-award text-warning me-1"></i>
                                 Member
                             </p>
-                            <p class="text-muted">ID : {{ $customer['id'] }}</p>
+                            <p class="text-muted">ID : {{ $customer['code'] ? $customer['code'] : '' }}</p>
                             <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                 data-bs-target="#modal-block-slideup">Lihat Data Identitas</button>
                         @elseif ($customer['status'] == 'pending')
