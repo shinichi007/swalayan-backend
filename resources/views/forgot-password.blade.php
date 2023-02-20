@@ -31,11 +31,19 @@
                                     <p class="text-uppercase fw-bold fs-sm text-muted">Reset Password</p>
                                 </div>
 
-                                <form class="js-validation-reminder" action="be_pages_auth_all.html" method="POST">
+                                <form class="js-validation-reminder" action="" method="POST">
+                                    @csrf
+                                    @if(count($errors) > 0)
+                                        <div class="alert alert-danger">
+                                            @foreach ($errors->all() as $error)
+                                            {{ $error }} <br/>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                     <div class="mb-4">
                                         <div class="input-group input-group-lg">
                                             <input type="text" class="form-control" id="reminder-credential"
-                                                name="reminder-credential" placeholder="Email">
+                                                name="email" placeholder="Email">
                                             <span class="input-group-text">
                                                 <i class="fa fa-user-circle"></i>
                                             </span>

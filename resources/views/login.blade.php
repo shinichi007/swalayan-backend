@@ -29,6 +29,13 @@
 
                   <form class="js-validation-signin" method="POST" action="{{ route('login') }}">
                     @csrf
+                    @if(count($errors) > 0)
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                            {{ $error }} <br/>
+                            @endforeach
+                        </div>
+                    @endif
                     <div class="mb-4">
                       <div class="input-group input-group-lg">
                         <input type="email" class="form-control" id="login-email" name="email" placeholder="Email">

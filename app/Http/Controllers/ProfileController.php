@@ -60,13 +60,12 @@ class ProfileController extends Controller
                                 ->withSuccess('ubah password berhasil');
             }
             else{
-                return redirect()->intended('change-password')
-                                ->with('error','Password lama tidak sesuai');
+                return redirect()->back()->withErrors(['msg' => 'Password lama tidak sesuai']);
             }
+
         }
         catch(\Exception $e){
-            return redirect()->intended('change-password')
-                                ->with('error',$e->getMessage());
+            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
         }
 
     }
@@ -79,21 +78,26 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        // try{
-            $this->validate($request, [
-                'profile_pic' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
-                'name' => 'required',
-            ]);
+        $this->validate($request, [
+            'profile_pic' => 'file|image|mimes:jpeg,png,jpg,png,svg|max:2048',
+            'name' => 'required',
+        ]);
 
-            $file = $request->file('profile_pic');
-            $filename = 'user-'.Auth::id().'.'.$file->getClientOriginalExtension();
-            $file->move('image/user/',$filename);
+        $user = User::where('id',Auth::id())->first();
+        if($request->file('profile_pic')){
+            $image_path = $request->file('profile_pic')->store('image', 'public');
+            $user->avatar = $image_path;
+        }
 
-            $user = User::find(Auth::id());
-            $user->avatar = 'image/user/'.$filename;
+        try{
             $user->name = $request->name;
             $user->save();
 
             return redirect()->back();
+        }
+        catch(\Exception $e){
+            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
+        }
+
     }
 }
