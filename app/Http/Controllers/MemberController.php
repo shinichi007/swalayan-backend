@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -61,6 +62,10 @@ class MemberController extends Controller
                 'code'  => null,
                 'point'  => 0
             ]);
+
+            $user = User::where('id',$uid)->first();
+            $user->role = 'member';
+            $user->save();
 
             Member::create($request->all());
 
@@ -201,16 +206,22 @@ class MemberController extends Controller
     {
         try{
             $member = Member::where('id',$member_id);
-
+            $user_id = Auth::id();
             $status_code = 404;
             $message = 'Member Not Found';
             if($member->count()){
-                $status_code = 200;
-                $member->delete();
-                $message = 'Delete Member Success';
+                $user = $member->first()->user;
+                if($user['id'] == $user_id){
+                    $member->delete();
+                    $status_code = 200;
+                    $message = 'Delete Member Success';
+                }else{
+                    $status_code = 405;
+                    $message = 'Kamu tidak berhak menghapus';
+                }
             }
 
-            $data = Member::where('user_id',Auth::id())->get();
+            $data = Member::where('user_id',$user_id)->get();
         }
         catch(\Exception $e){
             $status_code = 400;

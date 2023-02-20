@@ -28,6 +28,7 @@
                             data-bs-target="#btabs-static-operator" role="tab" aria-controls="btabs-static-operator"
                             aria-selected="false">Operator</button>
                     </li>
+                    @if(Auth::user()->role=='admin')
                     <li class="nav-item ms-auto">
                         <div class="btn-group btn-group-sm pe-2">
                             <a href="{{ URL('/users/create') }}" class="btn btn-alt-secondary">
@@ -36,6 +37,7 @@
                             </a>
                         </div>
                     </li>
+                    @endif
                 </ul>
                 <div class="block-content tab-content">
                     <div class="tab-pane active" id="btabs-static-admin" role="tabpanel"
@@ -76,7 +78,7 @@
                                         </td>
 
                                         <td class="text-center">
-                                            @if($admin->role == 'admin')
+                                            @if(Auth::user()->role == 'admin')
                                                 <div class="btn-group" bis_skin_checked="1">
                                                     <a href="{{ URL('/users/'.$admin->id.'/edit') }}"
                                                         class="btn btn-sm btn-alt-secondary">
@@ -133,18 +135,18 @@
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            @if($operator->role == 'admin')
-                                                <div class="btn-group" bis_skin_checked="1">
-                                                    <a href="{{ URL('/users/'.$operator->id.'/edit') }}"
-                                                        class="btn btn-sm btn-alt-secondary">
-                                                        <i class="fa fa-pencil-alt"></i>
-                                                    </a>
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-alt-secondary js-swal-confirm">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            @endif
+                                        @if(Auth::user()->role == 'admin')
+                                            <div class="btn-group" bis_skin_checked="1">
+                                                <a href="{{ URL('/users/'.$operator->id.'/edit') }}"
+                                                    class="btn btn-sm btn-alt-secondary">
+                                                    <i class="fa fa-pencil-alt"></i>
+                                                </a>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-alt-secondary js-swal-confirm">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        @endif
                                         </td>
                                     </tr>
                                     @endforeach

@@ -57,12 +57,19 @@
                                     <tr>
                                         <td class="text-center">{{ $indexPending++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="{{ url('customer/'.$pending['id']) }}">{{ $pending->user['name'] }}</a>
+                                            <a href="{{ url('customer/'.$pending['id']) }}">
+                                                {{ $pending->user['name'] }}
+                                            </a>
                                         </td>
-                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $pending->user['email'] }}</em>
+                                        <td class="d-none d-sm-table-cell">
+                                            <em class="text-muted">
+                                                {{ $pending->user['email'] }}
+                                            </em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $pending->user['phone'] }}</em>
+                                            <em class="text-muted">
+                                                {{ $pending->user['phone'] }}
+                                            </em>
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-warning">
@@ -93,12 +100,17 @@
                                     <tr>
                                         <td class="text-center">{{ $indexRegular++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="{{ url('customer/'.$reg['id']) }}">{{ $reg->user['name'] }}</a>
+                                            <a href="{{ url('/users/'.$reg['id'].'/edit') }}">
+                                                {{ $reg['name'] }}
+                                            </a>
                                         </td>
-                                        <td class="d-none d-sm-table-cell"><em class="text-muted">{{ $reg->user['email'] }}</em>
+                                        <td class="d-none d-sm-table-cell">
+                                            <em class="text-muted">
+                                                {{ $reg['email'] }}
+                                            </em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $reg->user['phone'] }}</em>
+                                            <em class="text-muted">{{ $reg['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-info">
@@ -173,9 +185,7 @@
                                     <tr>
                                         <td class="text-center">{{ $indexAll++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="{{ url('customer/'.$cust['id']) }}">
-                                                {{ $cust->user ? $cust->user['name'] : ''}}
-                                            </a>
+                                            {{ $cust->user ? $cust->user['name'] : ''}}
                                         </td>
                                         <td class="d-none d-sm-table-cell">
                                             <em class="text-muted">

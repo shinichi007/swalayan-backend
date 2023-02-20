@@ -90,21 +90,21 @@
                                     <tr>
                                         <td>
                                             <span class="fw-semibold">
-                                                {{ $customer->user ? $customer->user['name'] : '' }}
+                                                {{ $customer['name'] }}
                                             </span>
                                         </td>
                                         <td class="d-none d-xl-table-cell">
                                             <span class="fs-sm text-muted">
-                                                {{ $customer->user ? $customer->user['email'] : '' }}
+                                                {{ $customer['email'] }}
                                             </span>
                                         </td>
                                         <td>
                                             <span class="fw-semibold text-warning">
-                                                {{ $customer->user ? $customer->user['phone'] : '' }}
+                                                {{ $customer['phone'] }}
                                             </span>
                                         </td>
                                         <td class="text-center text-nowrap fw-medium">
-                                            <a href="{{ url('/customer/'.$customer['id']) }}">
+                                            <a href="{{ url('/users/'.$customer['id'].'/edit') }}">
                                                 Lihat
                                             </a>
                                         </td>

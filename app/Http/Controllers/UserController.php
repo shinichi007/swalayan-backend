@@ -476,7 +476,7 @@ class UserController extends Controller
             'name' => 'required',
         ]);
 
-        $user = User::where('id',Auth::id())->first();
+        $user = User::where('id',$user_id)->first();
 
         if($request->file('profile_pic')){
             $image_path = $request->file('profile_pic')->store('image', 'public');

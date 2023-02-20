@@ -127,20 +127,22 @@
                                 <span class="nav-main-link-name">Customer</span>
                             </a>
                         </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link {{ $title === 'Daftar User' || $title === 'Tambah User' ? 'active' : '' }}"
-                                href="/users">
-                                <i class="nav-main-link-icon fa fa-user-tie"></i>
-                                <span class="nav-main-link-name">User</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link {{ $title === 'Log' }}"
-                                href="/logs">
-                                <i class="nav-main-link-icon fa fa-gears"></i>
-                                <span class="nav-main-link-name">Log</span>
-                            </a>
-                        </li>
+                        @if(Auth::user()->role=='admin')
+                            <li class="nav-main-item">
+                                <a class="nav-main-link {{ $title === 'Daftar User' || $title === 'Tambah User' ? 'active' : '' }}"
+                                    href="/users">
+                                    <i class="nav-main-link-icon fa fa-user-tie"></i>
+                                    <span class="nav-main-link-name">User</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link {{ $title === 'Log' }}"
+                                    href="/logs">
+                                    <i class="nav-main-link-icon fa fa-gears"></i>
+                                    <span class="nav-main-link-name">Log</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
