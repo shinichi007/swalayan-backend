@@ -42,7 +42,7 @@
             <div class="content-side">
                 <div class="block block-transparent pull-x pull-t mb-0">
                     <div class="block-content tab-content overflow-hidden">
-                        <div class="tab-pane pull-x fade fade-up show active" id="so-settings" role="tabpanel"
+                        <div class="tab-pane pull-x fade-up show active" id="so-settings" role="tabpanel"
                             aria-labelledby="so-settings-tab" tabindex="0">
                             <div class="block mb-0">
                                 <div class="block-content block-content-sm block-content-full bg-body">
