@@ -39,7 +39,7 @@
                     <div class="py-4">
                         <div class="mb-3">
                             <img class="img-avatar img-avatar96"
-                                src="{{ $customer->user['avatar'] ? Storage::url($customer->user['avatar']) : asset('assets/media/avatars/avatar.jpg') }}"
+                                src="{{ $customer->user['avatar'] ? Storage::url($customer->user['avatar']) : asset('assets/media/avatars/default.jpeg') }}"
                                 >
                         </div>
                         <h1 class="fs-lg mb-0">

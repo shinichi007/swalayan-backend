@@ -21,7 +21,7 @@
                                     <label class="form-label">Foto</label>
                                     <div class="push">
                                         <img class="img-avatar"
-                                            src="{{ $user['avatar'] ? Storage::url($user['avatar']) : asset('assets/media/avatars/avatar.jpg') }}"
+                                            src="{{ $user['avatar'] ? Storage::url($user['avatar']) : asset('assets/media/avatars/default.jpeg') }}"
                                             >
                                     </div>
                                     <label class="form-label" for="dm-profile-edit-avatar">
