@@ -30,7 +30,7 @@
                         <div class="item rounded-3 bg-body mx-auto my-3">
                             <i class="fa fa-users fa-lg text-primary"></i>
                         </div>
-                        <div class="fs-1 fw-bold">{{ count($customers) }}</div>
+                        <div class="fs-1 fw-bold">{{ $totalCustomer }}</div>
                         <div class="text-muted mb-3">Customer</div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($customers->take(10) as $customer)
+                                @foreach ($nonMembers->take(10) as $customer)
 
                                     <tr>
                                         <td>

@@ -16,10 +16,13 @@ class DashboardController extends Controller
         }
 
         $customers = Member::select('members.id as member_id', 'users.name as name', 'users.email as email', 'users.phone as phone')
-                    ->join('users', 'users.id', '=', 'members.user_id')->where('role','member')->get();
+                    ->join('users', 'users.id', '=', 'members.user_id')->where('role','member')->get()->count();
+        $nonMembers = Member::select('members.id as member_id', 'users.name as name', 'users.email as email', 'users.phone as phone')
+                    ->join('users', 'users.id', '=', 'members.user_id')->where('status','!=','member')->where('role','member')->get();
         return view('dashboard', [
             'title' => 'Beranda',
-            'customers' => $customers,
+            'nonMembers' => $nonMembers,
+            'totalCustomer' => $customers,
             'members' => Member::where('status','member')->get(),
             'countPending' => Cache::get(Member::CACHE_KEY.'_count')
         ]);
