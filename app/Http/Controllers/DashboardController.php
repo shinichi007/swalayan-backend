@@ -15,9 +15,11 @@ class DashboardController extends Controller
             Member::cache_warming();
         }
 
+        $customers = Member::join('users', 'users.id', '=', 'members.user_id')
+                    ->where('status','!=','member')->where('role','member')->get();
         return view('dashboard', [
             'title' => 'Beranda',
-            'customers' => Member::where('status','regular')->orWhere('status','pending')->get(),
+            'customers' => $customers,
             'members' => Member::where('status','member')->get(),
             'countPending' => Cache::get(Member::CACHE_KEY.'_count')
         ]);

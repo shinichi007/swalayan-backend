@@ -16,10 +16,12 @@ class CustomerController extends Controller
             Member::cache_warming();
         }
 
+        $members = Member::join('users', 'users.id', '=', 'members.user_id')->where('role','member');
+
         return view('customers/customers',[
             'title'         => 'Customer',
-            'regulars'      => Member::where('status','regular')->get(),
-            'customers'     => Member::get(),
+            'regulars'      => $members->where('status','regular')->get(),
+            'customers'     => $members->where('status','!=','member')->get(),
             'members'       => Member::where('status','member')->get(),
             'pendings'      => Member::where('status','pending')->get(),
             'countPending'  => Cache::get(Member::CACHE_KEY.'_count')

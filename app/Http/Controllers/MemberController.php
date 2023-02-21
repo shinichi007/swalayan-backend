@@ -47,7 +47,7 @@ class MemberController extends Controller
         try{
 
             request()->validate([
-                'nik'           => 'required|string|min:1|max:17|unique:members',
+                'nik'           => 'required|string|min:1|max:17',
                 'ktp_photo'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 'ktp_name'      => 'required',
                 'ktp_gender'    => 'required',
