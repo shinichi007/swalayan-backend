@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -172,11 +173,15 @@ class UserController extends Controller
             ]);
 
             $image_path = $request->file('profile_pic')->store('image', 'public');
-            $request->request->add([
-                'avatar' => $image_path,
-            ]);
 
-            User::create($request->all());
+            User::create([
+                'name'      => $request->name,
+                'avatar'    => $image_path,
+                'role'      => $request->role,
+                'phone'     => $request->phone,
+                'email'     => $request->email,
+                'password'  => Hash::make($request->password)
+             ]);
 
             return redirect()->intended('users')
                                 ->withSuccess('Tambah user berhasil');
@@ -576,6 +581,40 @@ class UserController extends Controller
         catch(\Exception $e){
             return redirect()->back()
                 ->withErrors(['msg' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  int  $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete_user($user_id)
+    {
+
+        try{
+            DB::beginTransaction();
+            $user = User::where('id',$user_id)->first();
+            if(in_array(Auth::user()->role,['admin'])){
+
+                if($member = $user->member){
+                    $member->delete();
+                }
+
+                if(count($user->addresses) > 0){
+                    foreach($user->addresses as $address){
+                        $address->delete();
+                    }
+                }
+                $user->delete();
+            }
+            DB::commit();
+            return redirect()->back()->withSuccess('Delete user berhasil');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
         }
     }
 }

@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/customer/{id}/verification', [CustomerController::class, 'do_verify_customer']);
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit_customer']);
     Route::post('/customer/{id}/edit', [CustomerController::class, 'do_update_customer']);
-    Route::get('/customer/{id}/delete', [CustomerController::class, 'delete_customer']);
+    Route::delete('/customer/{id}/delete', [CustomerController::class, 'delete_customer']);
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::post('/profile', [ProfileController::class, 'update']);
     Route::post('/setting/{setting_id}', [SettingController::class, 'update']);
@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/users/create', [UserController::class, 'create_user'])->name('dashboard.user_create');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('dashboard.user.edit');
     Route::post('/users/{id}/edit', [UserController::class, 'edit_user'])->name('dashboard.user_edit');
+    Route::delete('/users/{id}/delete', [UserController::class, 'delete_user'])->name('dashboard.user.delete');
     Route::get('/logs', [DashboardController::class, 'logs']);
     Route::get('/logout', function () {
         $user = User::where('id',Auth::id())->first();

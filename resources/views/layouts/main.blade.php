@@ -9,6 +9,7 @@
 
     <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/dashmix.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet"
@@ -183,7 +184,7 @@
                                     Profil
                                 </a>
                                 <a class="dropdown-item" href="{{ URL('/change-password') }}">
-                                    <i class="far fa-fw fa-lock me-1"></i>
+                                    <i class="far fa-fw fa-asterisk me-1"></i>
                                     Ubah Password
                                 </a>
                                 <div role="separator" class="dropdown-divider"></div>
@@ -232,6 +233,7 @@
         </footer>
     </div>
     <script src="{{ asset('assets/js/lib/jquery.min.js') }}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/js/dashmix.app.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/be_tables_datatables.min.js') }}"></script>

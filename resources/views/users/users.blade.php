@@ -86,7 +86,7 @@
                                                         <i class="fa fa-pencil-alt"></i>
                                                     </a>
                                                     <button type="button"
-                                                        class="btn btn-sm btn-alt-secondary js-swal-confirm">
+                                                        class="btn btn-sm btn-alt-secondary">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </div>
@@ -142,10 +142,13 @@
                                                     class="btn btn-sm btn-alt-secondary">
                                                     <i class="fa fa-pencil-alt"></i>
                                                 </a>
-                                                <button type="button"
-                                                    class="btn btn-sm btn-alt-secondary js-swal-confirm">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
+                                                <form method="POST" action="{{ URL('/users/'.$operator->id.'/delete') }}">
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" id="delete_user" class="btn btn-sm btn-alt-secondary" data-toggle="tooltip" title='Delete'>
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         @endif
                                         </td>
@@ -162,5 +165,27 @@
 @endsection
 
 @section('custom_js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="{{ asset('assets/js/pages/add_user_dialog.min.js') }}"></script>
+    <script type="text/javascript">
+
+        $('#delete_user').click(function(event) {
+            var form =  $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: `Kamu yakin akan menghapus user ini?`,
+                text: "Jika iya, data tidak dapat dikembalikan.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+            });
+        });
+
+    </script>
 @endsection

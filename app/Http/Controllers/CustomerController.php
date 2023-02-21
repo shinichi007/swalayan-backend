@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Models\Audit;
 
 class CustomerController extends Controller
@@ -16,12 +17,10 @@ class CustomerController extends Controller
             Member::cache_warming();
         }
 
-        $members = Member::join('users', 'users.id', '=', 'members.user_id')->where('role','member');
-
         return view('customers/customers',[
             'title'         => 'Customer',
-            'regulars'      => $members->where('status','regular')->get(),
-            'customers'     => $members->where('status','!=','member')->get(),
+            'regulars'      => Member::join('users', 'users.id', '=', 'members.user_id')->where('role','member')->where('status','regular')->get(),
+            'customers'     => Member::join('users', 'users.id', '=', 'members.user_id')->where('role','member')->where('status','!=','member')->get(),
             'members'       => Member::where('status','member')->get(),
             'pendings'      => Member::where('status','pending')->get(),
             'countPending'  => Cache::get(Member::CACHE_KEY.'_count')
@@ -128,6 +127,7 @@ class CustomerController extends Controller
         try{
             $user = Auth::user();
             $member = Member::where('id',$customer_id)->first();
+            DB::beginTransaction();
             if(in_array($user->role,['admin','operator'])){
                 $c_user = $member->user;
 
@@ -138,9 +138,11 @@ class CustomerController extends Controller
                 $member->delete();
                 $c_user->delete();
             }
+            DB::commit();
             return redirect()->intended('/customers')->withSuccess('delete berhasil');
         }
         catch(\Exception $e){
+            DB::rollback();
             return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
         }
     }

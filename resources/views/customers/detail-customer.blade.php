@@ -18,17 +18,19 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a class="js-swal-confirm block block-rounded block-link-shadow text-center h-100 mb-0"
-                        href="{{ URL('/customer/'.$customer['id'].'/delete') }}">
+                    <form method="POST" action="{{ URL('/customer/'.$customer['id'].'/delete') }}" class="block block-rounded block-link-shadow text-center h-100 mb-0">
+                        @csrf
+                        <input name="_method" type="hidden" value="DELETE">
                         <div class="block-content py-5">
                             <div class="fs-3 fw-semibold text-danger mb-1">
                                 <i class="fa fa-times"></i>
                             </div>
-                            <p class="fw-semibold fs-sm text-danger text-uppercase mb-0">
+                            <button type="submit" class="fw-semibold fs-sm text-danger text-uppercase mb-0 delete_customer"
+                            style="border: none;background: none;">
                                 Hapus Customer
-                            </p>
+                            </button>
                         </div>
-                    </a>
+                    </form>
                 </div>
             </div>
 
@@ -262,5 +264,27 @@
 @endsection
 
 @section('custom_js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="{{ asset('assets/js/pages/customer_dialog.min.js') }}"></script>
+    <script type="text/javascript">
+
+        $('#delete_customer').click(function(event) {
+            var form =  $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: `Kamu yakin akan menghapus user ini?`,
+                text: "Jika iya, data tidak dapat dikembalikan.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+            });
+        });
+
+    </script>
 @endsection
