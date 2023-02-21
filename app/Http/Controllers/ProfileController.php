@@ -93,7 +93,7 @@ class ProfileController extends Controller
             $user->name = $request->name;
             $user->save();
 
-            return redirect()->back();
+            return redirect()->back()->withSuccess('Update Profile berhasil');
         }
         catch(\Exception $e){
             return redirect()->back()->withErrors(['msg' => $e->getMessage()]);

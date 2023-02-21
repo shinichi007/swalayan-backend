@@ -44,7 +44,7 @@ class UserController extends Controller
                 $user->password = Hash::make($request->password);
                 $user->save();
                 $verify->delete();
-                return redirect()->intended('/')->withSuccess(['msg' => 'Reset Password berhasil']);
+                return redirect()->intended('/')->withSuccess('Reset Password berhasil');
             }
             else{
                 return redirect()->intended('/')->withErrors(['msg' => 'Link sudah tidak Valid']);
@@ -84,7 +84,7 @@ class UserController extends Controller
                     $message->subject('Email Forgot Password');
                 });
 
-                return redirect()->back()->withSuccess(['msg' => 'Silahkan Cek Email Kamu']);
+                return redirect()->back()->withSuccess('Silahkan Cek Email Kamu');
 
             }
             else{
@@ -125,9 +125,7 @@ class UserController extends Controller
 
                 Session::flush();
                 Auth::logout();
-
                 return redirect()->intended('/')->withErrors(['msg' => $msg]);
-
             }else{
                 return redirect()->intended('/')->withErrors(['msg' => 'Email atau Password Salah']);
             }
@@ -573,7 +571,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->save();
 
-            return redirect()->back();
+            return redirect()->back()->withSuccess('Edit User berhasil');
         }
         catch(\Exception $e){
             return redirect()->back()

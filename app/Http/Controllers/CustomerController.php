@@ -136,7 +136,7 @@ class CustomerController extends Controller
                 $member->delete();
                 $c_user->delete();
             }
-            return redirect()->intended('/customers');
+            return redirect()->intended('/customers')->withSuccess('delete berhasil');
         }
         catch(\Exception $e){
             return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
