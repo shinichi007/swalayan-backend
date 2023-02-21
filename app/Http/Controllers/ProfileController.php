@@ -57,10 +57,10 @@ class ProfileController extends Controller
                 $user->save();
 
                 return redirect()->intended('change-password')
-                                ->withSuccess('ubah password berhasil');
+                                ->withSuccess('Ubah Password Berhasil');
             }
             else{
-                return redirect()->back()->withErrors(['msg' => 'Password lama tidak sesuai']);
+                return redirect()->back()->withErrors(['msg' => 'Password Lama Tidak Sesuai']);
             }
 
         }
@@ -93,7 +93,7 @@ class ProfileController extends Controller
             $user->name = $request->name;
             $user->save();
 
-            return redirect()->back()->withSuccess('Update Profile berhasil');
+            return redirect()->back()->withSuccess('Update Profil Berhasil');
         }
         catch(\Exception $e){
             return redirect()->back()->withErrors(['msg' => $e->getMessage()]);

@@ -87,11 +87,11 @@
                                                     </div>
                                                     <input type="text" class="form-control" id="reason"
                                                         name="reason"
-                                                        placeholder="Keterangan (Opsional) Cth. Foto KTP Tidak Jelas"
-                                                        style="display: none;">
+                                                        placeholder="Alasan Penolakan (Wajib) Cth: Foto KTP Tidak Jelas"
+                                                        style="display: none;" required>
                                                     <input type="number" class="code form-control" min='1000000000' max='999999999999'
                                                         name="code" id="code"
-                                                        placeholder="1235xxxxxxxx" style="display: none;">
+                                                        placeholder="Input Member ID. Contoh : 1234567890" style="display: none;">
                                                     <br>
                                                     <div class="row push">
                                                         <div class="col-lg-8 col-xl-5 offset-lg-4">

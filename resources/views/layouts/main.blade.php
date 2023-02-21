@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">
-                                               WA Token
+                                               Fonnte Token
                                             </label>
                                             <input type="text" class="form-control" name="fonnte_token" value="{{ $data_setting->fonnte_token }}" required>
                                         </div>
@@ -184,7 +184,7 @@
                                     Profil
                                 </a>
                                 <a class="dropdown-item" href="{{ URL('/change-password') }}">
-                                    <i class="far fa-fw fa-asterisk me-1"></i>
+                                    <i class="fa fa-lock me-2"></i>
                                     Ubah Password
                                 </a>
                                 <div role="separator" class="dropdown-divider"></div>

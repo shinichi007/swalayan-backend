@@ -104,7 +104,7 @@ class SettingController extends Controller
             ]);
 
             return redirect()->intended('dashboard')
-                                ->withSuccess('ubah setting berhasil');
+                                ->withSuccess('Pengaturan Berhasil Diubah');
 
         }
         catch(\Exception $e){

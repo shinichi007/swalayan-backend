@@ -84,11 +84,11 @@ class CustomerController extends Controller
             $member->save();
 
             return redirect()->intended('customers')
-                                ->withSuccess('verifikasi berhasil');
+                                ->withSuccess('Verifikasi Berhasil');
         }
         catch(\Exception $e){
             return redirect()->back()
-                        ->withErrors(['msg' => 'Verifikasi gagal']);
+                        ->withErrors(['msg' => 'Verifikasi Gagal']);
         }
     }
 
@@ -120,11 +120,11 @@ class CustomerController extends Controller
             $member->save();
 
             return redirect()->intended('customer/edit/'.$customer_id)
-                                ->withSuccess('update data berhasil');
+                                ->withSuccess('Update Data Berhasil');
         }
         catch(\Exception $e){
             return redirect()->intended('customer/edit/'.$customer_id)
-                ->withErrors(['msg' => 'update data gagal']);
+                ->withErrors(['msg' => 'Update Data Gagal']);
         }
     }
 
@@ -145,7 +145,7 @@ class CustomerController extends Controller
                 $c_user->delete();
             }
             DB::commit();
-            return redirect()->intended('/customers')->withSuccess('delete berhasil');
+            return redirect()->intended('/customers')->withSuccess('Hapus Data Berhasil');
         }
         catch(\Exception $e){
             DB::rollback();

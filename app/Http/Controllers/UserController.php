@@ -45,7 +45,7 @@ class UserController extends Controller
                 $user->password = Hash::make($request->password);
                 $user->save();
                 $verify->delete();
-                return redirect()->intended('/')->withSuccess('Reset Password berhasil');
+                return redirect()->intended('/')->withSuccess('Reset Password Berhasil');
             }
             else{
                 return redirect()->intended('/')->withErrors(['msg' => 'Link sudah tidak Valid']);
@@ -119,7 +119,7 @@ class UserController extends Controller
                         $user->active_token = $user->createToken('auth_token')->plainTextToken;
                         $user->save();
                         return redirect()->intended('dashboard')
-                            ->withSuccess('login berhasil');
+                            ->withSuccess('Login Berhasil');
                     }
                     $msg = 'Akun Kamu sedang login didevice lain';
                 }
@@ -184,7 +184,7 @@ class UserController extends Controller
              ]);
 
             return redirect()->intended('users')
-                                ->withSuccess('Tambah user berhasil');
+                                ->withSuccess('Berhasil Tambah User');
         }
         catch(\Exception $e){
             return redirect()->intended('users/create')
@@ -576,7 +576,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->save();
 
-            return redirect()->back()->withSuccess('Edit User berhasil');
+            return redirect()->back()->withSuccess('Edit User Berhasil');
         }
         catch(\Exception $e){
             return redirect()->back()
@@ -610,7 +610,7 @@ class UserController extends Controller
                 $user->delete();
             }
             DB::commit();
-            return redirect()->back()->withSuccess('Delete user berhasil');
+            return redirect()->back()->withSuccess('Berhasil Menghapus User');
         }
         catch(\Exception $e){
             DB::rollback();

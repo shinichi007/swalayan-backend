@@ -6,7 +6,7 @@
             <div class="row items-push">
                 <div class="col-6">
                     <a class="block block-rounded block-link-shadow text-center h-100 mb-0"
-                        href="{{ URL('/customer/edit/'.$customer['id']) }}">
+                        href="{{ URL('/customer/edit/' . $customer['id']) }}">
                         <div class="block-content py-5">
                             <div class="fs-3 fw-semibold mb-1">
                                 <i class="fa fa-pencil-alt"></i>
@@ -18,7 +18,8 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <form method="POST" action="{{ URL('/customer/'.$customer['id'].'/delete') }}" class="block block-rounded block-link-shadow text-center h-100 mb-0">
+                    <form method="POST" action="{{ URL('/customer/' . $customer['id'] . '/delete') }}"
+                        class="block block-rounded block-link-shadow text-center h-100 mb-0">
                         @csrf
                         <input name="_method" type="hidden" value="DELETE">
                         <div class="block-content py-5">
@@ -26,19 +27,20 @@
                                 <i class="fa fa-times"></i>
                             </div>
                             <button type="submit" class="fw-semibold fs-sm text-danger text-uppercase mb-0 delete_customer"
-                            style="border: none;background: none;">
+                                style="border: none;background: none;">
                                 Hapus Customer
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-
             <div class="block block-rounded">
                 <div class="block-content text-center">
                     <div class="py-4">
                         <div class="mb-3">
-                            <img class="img-avatar img-avatar96" src="{{ Storage::url($customer->user['avatar']) }}" alt="">
+                            <img class="img-avatar img-avatar96"
+                                src="{{ Storage::url($customer->user['avatar']) == '/storage/' ? 'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg' : Storage::url($customer->user['avatar']) }}"
+                                alt="">
                         </div>
                         <h1 class="fs-lg mb-0">
                             {{ $customer->user['name'] }}
@@ -55,7 +57,7 @@
                             <p class="text-muted">
                                 Pending
                             </p>
-                            <a class="btn btn-danger" href="{{ URL('/customer/'.$customer['id'].'/verification') }}">
+                            <a class="btn btn-danger" href="{{ URL('/customer/' . $customer['id'] . '/verification') }}">
                                 Verifikasi Identitas
                             </a>
                         @else
@@ -68,10 +70,10 @@
                 @include('partials.notif')
                 <div class="block-content bg-body-light text-center">
                     <div class="row items-push">
-                        @if(count($errors) > 0)
+                        @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
-                                {{ $error }} <br/>
+                                    {{ $error }} <br />
                                 @endforeach
                             </div>
                         @endif
@@ -86,7 +88,7 @@
                         <div class="col-6 col-md-3">
                             <div class="fw-semibold text-dark mb-1">Gender</div>
                             <a class="link-fx" href="javascript:void(0)">
-                                {{ ($customer->user['gender'] == 'm') ? 'Laki-Laki' : 'Perempuan' }}
+                                {{ $customer->user['gender'] == 'm' ? 'Laki-Laki' : 'Perempuan' }}
                             </a>
                         </div>
                         <div class="col-6 col-md-3">
@@ -142,8 +144,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(count($audits) > 0)
-                                    @foreach($audits as $key => $audit)
+                                @if (count($audits) > 0)
+                                    @foreach ($audits as $key => $audit)
                                         <tr>
                                             <td class="text-center">
                                                 <em class="text-muted">
@@ -151,18 +153,18 @@
                                                 </em>
                                             </td>
                                             <td class="fw-semibold text-center">
-                                                {{ $audit->user ? $audit->user['name'] : ''  }}
+                                                {{ $audit->user ? $audit->user['name'] : '' }}
                                             </td>
                                             <td class="text-center">
-                                                {{ $audit->user ? $audit->user['role'] : ''  }}
+                                                {{ $audit->user ? $audit->user['role'] : '' }}
                                             </td>
                                             <td class="text-center">
-                                                @foreach($audit->old_values as $attribute => $value)
+                                                @foreach ($audit->old_values as $attribute => $value)
                                                     {{ $value }}
                                                 @endforeach
                                             </td>
                                             <td class="text-center">
-                                                @foreach($audit->new_values as $attribute => $value)
+                                                @foreach ($audit->new_values as $attribute => $value)
                                                     {{ $value }}
                                                 @endforeach
                                             </td>
@@ -175,6 +177,7 @@
                 </div>
             @endif
         </div>
+
         @if ($customer['status'] != 'pending')
             <div class="modal fade" id="modal-block-slideup" tabindex="-1" role="dialog"
                 aria-labelledby="modal-block-slideup" aria-hidden="true">
@@ -227,7 +230,7 @@
                                                         </td>
                                                         <td>:</td>
                                                         <td>
-                                                            <span>{{ ($customer['ktp_gender'] == 'm') ? 'Laki-Laki' : 'Perempuan' }}</span>
+                                                            <span>{{ $customer['ktp_gender'] == 'm' ? 'Laki-Laki' : 'Perempuan' }}</span>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -267,24 +270,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="{{ asset('assets/js/pages/customer_dialog.min.js') }}"></script>
     <script type="text/javascript">
-
         $('#delete_customer').click(function(event) {
-            var form =  $(this).closest("form");
+            var form = $(this).closest("form");
             var name = $(this).data("name");
             event.preventDefault();
             swal({
-                title: `Kamu yakin akan menghapus user ini?`,
-                text: "Jika iya, data tidak dapat dikembalikan.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-            if (willDelete) {
-                form.submit();
-            }
-            });
+                    title: `Kamu yakin akan menghapus user ini?`,
+                    text: "Jika iya, data tidak dapat dikembalikan.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
         });
-
     </script>
 @endsection

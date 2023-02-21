@@ -8,6 +8,7 @@
 @endif
 
 @if ($success = Session::get('success'))
+<br>
     <div class="alert alert-success alert-dismissible">
         <a href="javascript:void(0)" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         {{ $success }}
