@@ -190,7 +190,7 @@
                                     <tr>
                                         <td class="text-center">{{ $indexAll++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="{{ url('customer/'.$cust['id']) }}">
+                                            <a href="{{ url('customer/'.$cust['member_id']) }}">
                                                 {{ $cust['name']}}
                                             </a>
                                         </td>
