@@ -11,13 +11,7 @@
                         <i class="fa fa-fw fa-user-circle text-muted me-1"></i>
                         Verifikasi Data
                     </h2>
-                    @if(count($errors) > 0)
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                            {{ $error }} <br/>
-                            @endforeach
-                        </div>
-                    @endif
+                    @include('partials.notif')
                     <div class="row push">
                         <div class="col-lg-12">
                             <div class="block-content">

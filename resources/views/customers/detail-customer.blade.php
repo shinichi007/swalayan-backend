@@ -63,7 +63,7 @@
                         @endif
                     </div>
                 </div>
-
+                @include('partials.notif')
                 <div class="block-content bg-body-light text-center">
                     <div class="row items-push">
                         @if(count($errors) > 0)

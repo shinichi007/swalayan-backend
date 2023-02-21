@@ -25,7 +25,10 @@ use Illuminate\Support\Facades\Session;
 Route::get('/', [UserController::class, 'login']);
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'do_login'])->name('login');
-Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::get('/forgot-password', [UserController::class, 'forgotPassword']);
+Route::post('/forgot-password', [UserController::class, 'do_forgotPassword']);
+Route::get('/reset-password/{token}', [UserController::class, 'resetPassword']);
+Route::post('/reset-password/{token}', [UserController::class, 'do_resetPassword']);
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/customers', [CustomerController::class, 'index'])->name('dashboard.customer');

@@ -16,6 +16,7 @@
         </div>
         <div class="content">
             <div class="block block-rounded">
+                @include('partials.notif')
                 <ul class="nav nav-tabs nav-tabs-block" role="tablist">
                     <li class="nav-item">
                         <button class="nav-link active" id="btabs-static-pending-tab" data-bs-toggle="tab"

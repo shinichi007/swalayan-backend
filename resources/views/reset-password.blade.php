@@ -1,24 +1,21 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>JM Swalayan - Lupa Password</title>
-    <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
-    <link rel="stylesheet" href="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.css') }}">
-    <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/dashmix.min.css') }}">
+    <title>JM Swalayan - Login</title>
+    <link rel="shortcut icon" href="/assets/media/favicons/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/media/favicons/favicon-192x192.png">
 
-</head>
+    <link rel="stylesheet" id="css-main" href="/assets/css/dashmix.min.css">
 
-<body>
+  </head>
+  <body>
     <div id="page-container">
 
         <main id="main-container">
-            <div class="bg-image" style="background-image: url('assets/media/photos/bg-login.png');">
+            <div class="bg-image" style="background-image: url('/assets/media/photos/bg-login.png');">
                 <div class="row g-0 justify-content-center bg-black-75">
                     <div class="hero-static col-sm-8 col-md-6 col-xl-4 d-flex align-items-center p-2 px-sm-0">
                         <div class="block block-transparent block-rounded w-100 mb-0 overflow-hidden">
@@ -31,20 +28,30 @@
                                     <p class="text-uppercase fw-bold fs-sm text-muted">Reset Password</p>
                                 </div>
 
-                                <form class="js-validation-reminder" action="{{ URL('/forgot-password')}}" method="POST">
+                                <form class="js-validation-reminder" action="{{ URL('/reset-password/'.$token)}}" method="POST">
                                     @csrf
-
                                     @include('partials.notif')
-
                                     <div class="mb-4">
                                         <div class="input-group input-group-lg">
-                                            <input type="email" class="form-control" id="reminder-credential"
-                                                name="email" placeholder="Email" required>
+                                            <input type="password" class="form-control" id="reminder-credential"
+                                                name="password" placeholder="Password" required>
                                             <span class="input-group-text">
                                                 <i class="fa fa-user-circle"></i>
                                             </span>
                                         </div>
                                     </div>
+                                    <div class="mb-4">
+                                        <div class="input-group input-group-lg">
+                                            <input type="password" class="form-control"
+                                            id="dm-profile-edit-password-new-confirm"
+                                            placeholder="Password Confirmation"
+                                            name="password_confirmation" required>
+                                            <span class="input-group-text">
+                                                <i class="fa fa-user-circle"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="otp" value="{{ $otp }}">
                                     <div class="d-sm-flex justify-content-sm-between align-items-sm-center text-center text-sm-start mb-4">
                                         <div class="fw-semibold fs-sm py-1">
                                             Punya akun? <a href="{{ URL('/') }}">Login</a>
@@ -66,14 +73,13 @@
     </div>
 
 
-    <script src="{{ asset('assets/js/dashmix.app.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/forgot_password_dialog.min.js') }}"></script>
-    <script src="{{ asset('assets/js/lib/jquery.min.js') }}"></script>
+    <script src="/assets/js/dashmix.app.min.js"></script>
 
-    <script src="{{ asset('assets/js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="/assets/js/lib/jquery.min.js"></script>
 
-    <script src="{{ asset('assets/js/pages/op_auth_reminder.min.js') }}"></script>
-</body>
+    <script src="/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+
+    <script src="/assets/js/pages/op_auth_signin.min.js"></script>
+  </body>
 
 </html>

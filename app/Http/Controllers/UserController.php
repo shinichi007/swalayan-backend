@@ -3,16 +3,99 @@
 namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\User;
+use App\Models\userVerify;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function resetPassword($token) {
+        $otp = base64_decode($token);
+        if(userVerify::where('otp',$otp)->active()->get()->count() > 0){
+            return view('reset-password',[
+                'otp' => $otp,
+                'token' => $token
+            ]);
+        }
+
+        return redirect()->intended('/')
+                ->withErrors(['msg' => 'Link sudah tidak Valid']);
+    }
+
+    public function do_resetPassword(Request $request, $token) {
+        $otp = base64_decode($token);
+
+        try{
+            request()->validate([
+                'otp'                   => 'required|string|min:6',
+                'password'              => 'required|string|min:6',
+                'password_confirmation' => 'required_with:password|same:password|min:6'
+            ]);
+            // find the code
+            if ($verify = userVerify::where('otp',$request->otp)->active()->first()) {
+                $user = $verify->user;
+                // update user password
+                $user->password = Hash::make($request->password);
+                $user->save();
+                $verify->delete();
+                return redirect()->intended('/')->withSuccess(['msg' => 'Reset Password berhasil']);
+            }
+            else{
+                return redirect()->intended('/')->withErrors(['msg' => 'Link sudah tidak Valid']);
+            }
+        }
+        catch(\Exception $e){
+            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
+        }
+    }
+
+    public function forgotPassword() {
+        return view('forgot-password');
+    }
+
+    public function do_forgotPassword(Request $request) {
+        try{
+            $this->validate($request, [
+                'email' => 'required|email',
+            ]);
+
+            if($user = User::where('email',$request->email)->first()){
+                $otp = random_int(100000,999999);
+                $exp_time = Carbon::now("Asia/Jakarta")->addMinutes(5);
+                $expired_time = $exp_time->format('Y-m-d H:i:s');
+
+                userVerify::create([
+                    'user_id'       => $user->id,
+                    'otp'           => $otp,
+                    'is_used'       => false,
+                    'expired_time'  => $expired_time,
+                ]);
+
+                $receiver = $request->email;
+
+                Mail::send('emails.emailForgotPassword', ['otp' => base64_encode($otp), 'expired_time' => $expired_time], function($message) use($receiver){
+                    $message->to($receiver);
+                    $message->subject('Email Forgot Password');
+                });
+
+                return redirect()->back()->withSuccess(['msg' => 'Silahkan Cek Email Kamu']);
+
+            }
+            else{
+                return redirect()->back()->withErrors(['msg' => 'Akun atau email tidak ditemukan']);
+            }
+
+        }
+        catch(\Exception $e){
+            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
+        }
+    }
 
     public function login(Request $request) {
         return view('login');
@@ -104,10 +187,6 @@ class UserController extends Controller
             return redirect()->intended('users/create')
                 ->withErrors(['msg' => $e->getMessage()]);
         }
-    }
-
-    public function forgotPassword(Request $request) {
-        return view('forgot-password');
     }
 
     /**

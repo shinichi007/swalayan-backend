@@ -20,6 +20,7 @@
                 </p>
             </div>
         </div>
+        @include('partials.notif')
     </div>
     <div class="content">
         <div class="row items-push">

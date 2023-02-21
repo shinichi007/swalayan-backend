@@ -7,6 +7,7 @@
                 <div class="block-content">
                     <form action="{{ URL('/change-password') }}" method="POST">
                         @csrf
+                        @include('partials.notif')
                         <div class="row push">
                             <div class="col-lg-12">
                                 <h2 class="content-heading pt-0">

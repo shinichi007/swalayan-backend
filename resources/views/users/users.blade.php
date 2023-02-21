@@ -39,6 +39,7 @@
                     </li>
                     @endif
                 </ul>
+                @include('partials.notif')
                 <div class="block-content tab-content">
                     <div class="tab-pane active" id="btabs-static-admin" role="tabpanel"
                         aria-labelledby="btabs-static-admin-tab" tabindex="0">

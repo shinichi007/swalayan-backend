@@ -15,13 +15,7 @@
                                     Tambah User
                                 </h2>
 
-                                @if(count($errors) > 0)
-                                    <div class="alert alert-danger">
-                                        @foreach ($errors->all() as $error)
-                                        {{ $error }} <br/>
-                                        @endforeach
-                                    </div>
-                                @endif
+                                @include('partials.notif')
 
                                 <div class="mb-4">
                                     <label class="form-label">Foto</label>

@@ -66,7 +66,7 @@ class CustomerController extends Controller
 
             $member = Member::find($customer_id);
             if($request->status == 'reject'){
-                $member->status = 'pending';
+                $member->status = 'regular';
                 $member->reason = $request->reason;
                 $member->code   = '';
             }elseif($request->status == 'member'){
