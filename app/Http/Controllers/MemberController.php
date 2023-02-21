@@ -59,6 +59,7 @@ class MemberController extends Controller
             $request->request->add([
                 'ktp_img' => $image_path,
                 'code'  => null,
+                'reason' => '',
                 'point'  => 0
             ]);
 
