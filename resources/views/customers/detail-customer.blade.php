@@ -179,7 +179,7 @@
         </div>
 
         @if ($customer['status'] != 'pending')
-            <div class="modal fade" id="modal-block-slideup" tabindex="-1" role="dialog"
+            <div class="modal" id="modal-block-slideup" tabindex="-1" role="dialog"
                 aria-labelledby="modal-block-slideup" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-slideup" role="document">
                     <div class="modal-content">
@@ -283,7 +283,7 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        form.submit();
+                        //form.submit();
                     }
                 });
         });
