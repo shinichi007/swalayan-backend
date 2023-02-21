@@ -151,7 +151,7 @@ class AuthController extends Controller
 
             userVerify::sendMail($user->email, $otp, $expired_time);
             $text_sms = 'Kode OTP : '.$otp.' berlaku sampai '.$expired_time;
-            // userVerify::sendWA($user->phone, $text_sms);
+            userVerify::sendWA($user->phone, $text_sms);
 
         }
         catch(\Exception $e){
