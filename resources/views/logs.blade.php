@@ -20,12 +20,11 @@
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Nama</th>
                                 <th class="text-center">Event</th>
-                                <th class="text-center">Data Sebelum</th>
-                                <th class="text-center">Data Sesudah</th>
+                                <th class="text-center" style="width:100px">Keterangan</th>
                             </tr>
                         </thead>
-                        @foreach($audits as $key => $audit)
                             <tbody>
+                            @foreach($audits as $key => $audit)
                                 <tr>
                                     <td class="text-center">
                                         {{$key+1}}
@@ -45,23 +44,40 @@
                                             {{ $audit->event  }}
                                         </em>
                                     </td>
-                                    <td>
+                                    <td style="width:100px">
+                                        <p>
+                                            <b>{{ $audit->user ? $audit->user['name'] : ''  }}</b>
+                                            dengan role
+                                            {{ $audit->user ? $audit->user['role'] : ''  }}
+                                            Telah {{ $audit->event  }}
+                                            data
+                                            <b>{{ substr($audit->auditable_type,11) }}</b>
+                                            dengan id {{ $audit->auditable_id }}
+                                            <br>
+                                            url : <b>{{ $audit->url }}</b>
+                                        </p>
+                                        <p> Sebelum : </p>
                                         <ul>
-                                        @foreach($audit->old_values as $attribute => $value)
-                                            <li>{{ $attribute }} : {{ $value }}</li>
-                                        @endforeach
+                                            @foreach($audit->old_values as $attribute => $value)
+                                                <li>
+                                                    {{ $attribute }} :
+                                                    <br>{{ json_decode($value) ? json_encode(json_decode($value),JSON_PRETTY_PRINT) : $value }}
+                                                </li>
+                                            @endforeach
                                         </ul>
-                                    </td>
-                                    <td>
+                                        <p>Setelah : </p>
                                         <ul>
-                                        @foreach($audit->new_values as $attribute => $value)
-                                            <li>{{ $attribute }} : {{ $value }}</li>
-                                        @endforeach
+                                            @foreach($audit->new_values as $attribute => $value)
+                                                <li>
+                                                    {{ $attribute }} :
+                                                    <br>{{ json_decode($value) ? json_encode(json_decode($value),JSON_PRETTY_PRINT) : $value }}
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </td>
                                 </tr>
-                            </tbody>
-                        @endforeach
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
