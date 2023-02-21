@@ -66,25 +66,22 @@ class CustomerController extends Controller
 
             $member = Member::find($customer_id);
             if($request->status == 'reject'){
-
                 $member->status = 'pending';
                 $member->reason = $request->reason;
                 $member->code   = '';
-                $member->save();
-
             }elseif($request->status == 'member'){
                 $member->status = 'member';
                 $member->reason = '';
                 $member->code   = $request->code;
-                $member->save();
             }
+            $member->save();
 
             return redirect()->intended('customers')
                                 ->withSuccess('verifikasi berhasil');
         }
         catch(\Exception $e){
-            return redirect()->intended('customer/'.$customer_id)
-                                ->with('error','verifikasi gagal');
+            return redirect()->back()
+                        ->withErrors(['msg' => 'Verifikasi gagal']);
         }
     }
 
@@ -120,7 +117,7 @@ class CustomerController extends Controller
         }
         catch(\Exception $e){
             return redirect()->intended('customer/edit/'.$customer_id)
-                                ->with('error','update data gagal');
+                ->withErrors(['msg' => 'update data gagal']);
         }
     }
 
