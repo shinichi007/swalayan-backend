@@ -40,19 +40,19 @@
                         <div class="col-lg-8 col-xl-5">
                         <div class="mb-4">
                             <label class="form-label" for="dm-profile-edit-name">Nama</label>
-                            <input type="text" class="form-control" id="dm-profile-edit-name" name="name" placeholder="Masukan nama.." value="{{ $customer->user['name'] }}">
+                            <input type="text" class="form-control" name="name" placeholder="Masukan nama.." value="{{ $customer->user['name'] }}">
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="dm-profile-edit-email">Email</label>
-                            <input type="email" class="form-control" id="dm-profile-edit-email" name="email" placeholder="Masukan email.." value="{{ $customer->user['email'] }}" disabled>
+                            <input type="email" class="form-control" name="email" placeholder="Masukan email.." value="{{ $customer->user['email'] }}" disabled>
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="dm-profile-edit-job-title">No HP</label>
-                            <input type="text" class="form-control" id="dm-profile-edit-job-title" name="phone" placeholder="Masukan Nomor HP.." value="{{ $customer->user['phone'] }}" disabled>
+                            <input type="text" class="form-control" name="phone" placeholder="Masukan Nomor HP.." value="{{ $customer->user['phone'] }}" disabled>
                         </div>
                         <div class="mb-4">
                             <label class="form-label" for="dm-profile-edit-company">Poin Member</label>
-                            <input type="number" class="form-control" id="dm-profile-edit-company" name="point" value="{{ $customer['point'] }}" {{ $customer['status'] == 'member' ? '' : 'disabled' }}>
+                            <input type="number" class="form-control" name="point" value="{{ $customer['point'] }}" {{ $customer['status'] == 'member' ? '' : 'disabled' }}>
                         </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                     <div class="row push">
                         <div class="col-lg-8 col-xl-5 offset-lg-4">
                         <div class="mb-4">
-                            <button type="submit" class="btn btn-alt-primary js-swal-success">
+                            <button type="submit" class="btn btn-alt-primary">
                                 <i class="fa fa-check-circle opacity-50 me-1"></i> Update Customer
                             </button>
                         </div>

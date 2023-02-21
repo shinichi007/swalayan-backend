@@ -20,7 +20,9 @@
                                 <div class="mb-4">
                                     <label class="form-label">Foto</label>
                                     <div class="push">
-                                        <img class="img-avatar" src="{{ Storage::url($user['avatar']) }}">
+                                        <img class="img-avatar"
+                                            src="{{ $user['avatar'] ? Storage::url($user['avatar']) : asset('assets/media/avatars/avatar.jpg') }}"
+                                            >
                                     </div>
                                     <label class="form-label" for="dm-profile-edit-avatar">
                                         Ubah Foto

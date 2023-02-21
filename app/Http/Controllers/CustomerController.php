@@ -18,9 +18,11 @@ class CustomerController extends Controller
         }
         $customers = Member::select('members.id as member_id', 'users.name as name', 'users.email as email', 'users.phone as phone', 'members.status as status', 'members.point as point')
         ->join('users', 'users.id', '=', 'members.user_id')->where('role','member')->get();
+        $regular = Member::select('members.id as member_id', 'users.name as name', 'users.email as email', 'users.phone as phone', 'members.status as status', 'members.point as point')
+        ->join('users', 'users.id', '=', 'members.user_id')->where('role','member')->where('status','regular')->get();
         return view('customers/customers',[
             'title'         => 'Customer',
-            'regulars'      => Member::join('users', 'users.id', '=', 'members.user_id')->where('role','member')->where('status','regular')->get(),
+            'regulars'      => $regular,
             'customers'     => $customers,
             'members'       => Member::where('status','member')->get(),
             'pendings'      => Member::where('status','pending')->get(),
@@ -107,8 +109,7 @@ class CustomerController extends Controller
     public function do_update_customer(Request $request, $customer_id) {
         try{
             request()->validate([
-                'name' => 'required|string',
-                'point'  => 'required|integer'
+                'name' => 'required|string'
             ]);
 
             $member = Member::find($customer_id);

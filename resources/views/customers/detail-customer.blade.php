@@ -39,8 +39,8 @@
                     <div class="py-4">
                         <div class="mb-3">
                             <img class="img-avatar img-avatar96"
-                                src="{{ Storage::url($customer->user['avatar']) == '/storage/' ? 'https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg' : Storage::url($customer->user['avatar']) }}"
-                                alt="">
+                                src="{{ $customer->user['avatar'] ? Storage::url($customer->user['avatar']) : asset('assets/media/avatars/avatar.jpg') }}"
+                                >
                         </div>
                         <h1 class="fs-lg mb-0">
                             {{ $customer->user['name'] }}
@@ -93,7 +93,9 @@
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="fw-semibold text-dark mb-1">Poin</div>
-                            <a class="link-fx" href="javascript:void(0)">{{ $customer['point'] }}</a>
+                            <a class="link-fx" href="javascript:void(0)">
+                                {{ $customer['point'] ? $customer['point'] : '-' }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -198,8 +200,7 @@
                             <div class="block-content">
                                 <a class="img-link img-link-zoom-in img-thumb img-lightbox"
                                     href="{{ Storage::url($customer['ktp_img']) }}">
-                                    <img class="img-fluid" src="{{ Storage::url($customer['ktp_img']) }}"
-                                        alt="">
+                                    <img class="img-fluid" src="{{ Storage::url($customer['ktp_img']) }}">
                                 </a>
                                 <div class="block block-rounded">
                                     <div class="block-content">

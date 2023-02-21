@@ -101,17 +101,17 @@
                                     <tr>
                                         <td class="text-center">{{ $indexRegular++ }}</td>
                                         <td class="fw-semibold">
-                                            <a href="{{ url('/customer/'.$reg['id']) }}">
-                                                {{ $reg->user['name'] }}
+                                            <a href="{{ url('/customer/'.$reg['member_id']) }}">
+                                                {{ $reg['name'] }}
                                             </a>
                                         </td>
                                         <td class="d-none d-sm-table-cell">
                                             <em class="text-muted">
-                                                {{ $reg->user['email'] }}
+                                                {{ $reg['email'] }}
                                             </em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
-                                            <em class="text-muted">{{ $reg->user['phone'] }}</em>
+                                            <em class="text-muted">{{ $reg['phone'] }}</em>
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-info">
@@ -162,7 +162,7 @@
                                         </td>
                                         <td class="text-center">
                                             <em class="text-muted">
-                                            {{ $member['point'] ? $member['point'] : 0 }}
+                                            {{ $member['point'] ? $member['point'] : '-' }}
                                             </em>
                                         </td>
                                     </tr>
@@ -219,7 +219,7 @@
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
                                             <em class="text-muted">
-                                                {{ $cust['point'] ? $cust['point'] : 0 }}
+                                                {{ $cust['point'] ? $cust['point'] : '-' }}
                                             </em>
                                         </td>
                                     </tr>
