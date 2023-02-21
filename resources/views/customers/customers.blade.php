@@ -191,17 +191,17 @@
                                         <td class="text-center">{{ $indexAll++ }}</td>
                                         <td class="fw-semibold">
                                             <a href="{{ url('customer/'.$cust['id']) }}">
-                                                {{ $cust->user ? $cust->user['name'] : ''}}
+                                                {{ $cust['name']}}
                                             </a>
                                         </td>
                                         <td class="d-none d-sm-table-cell">
                                             <em class="text-muted">
-                                                {{ $cust->user ? $cust->user['email'] : ''}}
+                                                {{ $cust['email']}}
                                             </em>
                                         </td>
                                         <td class="d-none d-sm-table-cell text-center">
                                             <em class="text-muted">
-                                                {{ $cust->user ? $cust->user['phone'] : '' }}
+                                                {{ $cust['phone'] }}
                                             </em>
                                         </td>
                                         <td class="text-center">

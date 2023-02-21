@@ -15,8 +15,8 @@ class DashboardController extends Controller
             Member::cache_warming();
         }
 
-        $customers = Member::join('users', 'users.id', '=', 'members.user_id')
-                    ->where('status','!=','member')->where('role','member')->get();
+        $customers = Member::select('members.id as member_id', 'users.name as name', 'users.email as email', 'users.phone as phone')
+                    ->join('users', 'users.id', '=', 'members.user_id')->where('role','member')->get();
         return view('dashboard', [
             'title' => 'Beranda',
             'customers' => $customers,

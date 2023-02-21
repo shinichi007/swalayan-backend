@@ -16,11 +16,12 @@ class CustomerController extends Controller
         if(!Cache::has(Member::CACHE_KEY)){
             Member::cache_warming();
         }
-
+        $customers = Member::select('members.id as member_id', 'users.name as name', 'users.email as email', 'users.phone as phone', 'members.status as status', 'members.point as point')
+        ->join('users', 'users.id', '=', 'members.user_id')->where('role','member')->get();
         return view('customers/customers',[
             'title'         => 'Customer',
             'regulars'      => Member::join('users', 'users.id', '=', 'members.user_id')->where('role','member')->where('status','regular')->get(),
-            'customers'     => Member::join('users', 'users.id', '=', 'members.user_id')->where('role','member')->where('status','!=','member')->get(),
+            'customers'     => $customers,
             'members'       => Member::where('status','member')->get(),
             'pendings'      => Member::where('status','pending')->get(),
             'countPending'  => Cache::get(Member::CACHE_KEY.'_count')
@@ -32,19 +33,24 @@ class CustomerController extends Controller
             Member::cache_warming();
         }
 
-        $audits = Audit::with('user')
+        if($member = Member::find($customer_id)) {
+            $audits = Audit::with('user')
             ->where('auditable_id',$customer_id)
             ->where('user_id','>',0)
             ->where('old_values','LIKE', '%point%')
             ->where('auditable_type','App\Models\Member')
             ->orderBy('created_at', 'desc')->get();
 
-        return view('customers/detail-customer',[
-            'title' => 'Detail Customer',
-            'audits' => $audits,
-            'customer' => Member::find($customer_id),
-            'countPending' => Cache::get(Member::CACHE_KEY.'_count')
-        ]);
+            return view('customers/detail-customer',[
+                'title' => 'Detail Customer',
+                'audits' => $audits,
+                'customer' => $member,
+                'countPending' => Cache::get(Member::CACHE_KEY.'_count')
+            ]);
+        }
+
+        return redirect()->back()->withErrors(['msg' => 'Customer tidak ditemukan']);
+
     }
 
     public function verify_customer($customer_id) {
