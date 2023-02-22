@@ -39,20 +39,41 @@
                                             </em>
                                         </td>
                                         <td class="text-center">
-                                            {{ $audit->event == 'deleted' ? 'Hapus' : ($audit->event == 'updated' ? 'Ubah' : $audit->event) }}
+                                            @if (str_contains($audit->url, 'login') !== false)
+                                                Login
+                                            @elseif(str_contains($audit->url, 'logout') !== false)
+                                            Logout
+                                            @else
+                                            {{ $audit->event == 'deleted' ? 'Hapus' : ($audit->event == 'updated' ? 'Ubah' : 'Buat') }}
+                                            @endif
                                         </td>
                                         <td style="width:100px">
+                                            @if (str_contains($audit->url, 'login') !== false)
+                                            <b>{{ $audit->user ? $audit->user['name'] : '' }}</b> ({{ $audit->user ? $audit->user['role'] : '' }}) telah login kedalam sistem
+                                            @elseif(str_contains($audit->url, 'logout') !== false)
+                                            <b>{{ $audit->user ? $audit->user['name'] : '' }}</b> ({{ $audit->user ? $audit->user['role'] : '' }}) telah logout
+                                            @else
                                             <p>
                                                 <b>{{ $audit->user ? $audit->user['name'] : '' }}</b>
                                                 ({{ $audit->user ? $audit->user['role'] : '' }})
                                                 telah
-                                                {{ $audit->event == 'deleted' ? 'menghapus' : ($audit->event == 'updated' ? 'mengubah' : $audit->event) }}
+                                                {{ $audit->event == 'deleted' ? 'menghapus' : ($audit->event == 'updated' ? 'mengubah' : 'membuat') }}
                                                 data
                                                 <b>{{ substr($audit->auditable_type, 11) == "Member" ? "Customer" : substr($audit->auditable_type, 11) }}</b>
                                                 dengan id {{ $audit->auditable_id }}
                                                 <br>
                                                 URL : <b>{{ $audit->url }}</b>
                                             </p>
+                                            @if ($audit->old_values == [])
+                                            <ul>
+                                                @foreach ($audit->new_values as $attribute => $value)
+                                                    <li>
+                                                        {{ $attribute }} :
+                                                        <br>{{ json_decode($value) ? json_encode(json_decode($value), JSON_PRETTY_PRINT) : $value }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                            @elseif ($audit->new_values == [])
                                             <p> Sebelum : </p>
                                             <ul>
                                                 @foreach ($audit->old_values as $attribute => $value)
@@ -62,7 +83,17 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
-                                            <p>Setelah : </p>
+                                            @else
+                                            <p> Sebelum : </p>
+                                            <ul>
+                                                @foreach ($audit->old_values as $attribute => $value)
+                                                    <li>
+                                                        {{ $attribute }} :
+                                                        <br>{{ json_decode($value) ? json_encode(json_decode($value), JSON_PRETTY_PRINT) : $value }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                            <p>Sesudah : </p>
                                             <ul>
                                                 @foreach ($audit->new_values as $attribute => $value)
                                                     <li>
@@ -71,6 +102,8 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
+                                            @endif
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
