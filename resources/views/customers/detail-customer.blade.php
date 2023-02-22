@@ -18,20 +18,27 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <form method="POST" action="{{ URL('/customer/' . $customer['id'] . '/delete') }}"
-                        class="block block-rounded block-link-shadow text-center h-100 mb-0">
-                        @csrf
-                        <input name="_method" type="hidden" value="DELETE">
+                    <a href="javascript:void(0);" id="delete_customer" data-user="{{ $customer['id'] }}" class="block block-rounded block-link-shadow text-center h-100 mb-0">
                         <div class="block-content py-5">
                             <div class="fs-3 fw-semibold text-danger mb-1">
                                 <i class="fa fa-times"></i>
                             </div>
-                            <button type="submit" class="fw-semibold fs-sm text-danger text-uppercase mb-0 delete_customer"
-                                style="border: none;background: none;">
+                            <p class="fw-semibold fs-sm text-danger text-uppercase mb-0">
                                 Hapus Customer
-                            </button>
+                            </p>
                         </div>
-                    </form>
+                        <form method="POST" action="{{ URL('/customer/' . $customer['id'] . '/delete') }}"
+                            style="display: none;"
+                            >
+                            @csrf
+                            <input name="_method" type="hidden" value="DELETE">
+                            <div class="block-content py-5">
+                                <button type="submit" id="delete_customer-{{ $customer['id'] }}">
+                                    Hapus Customer
+                                </button>
+                            </div>
+                        </form>
+                    </a>
                 </div>
             </div>
             <div class="block block-rounded">
@@ -269,14 +276,11 @@
 
 @section('custom_js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-    <script src="{{ asset('assets/js/pages/customer_dialog.min.js') }}"></script>
     <script type="text/javascript">
-        $('#delete_customer').click(function(event) {
-            var form = $(this).closest("form");
-            var name = $(this).data("name");
-            event.preventDefault();
+        $('a#delete_customer').click(function(event) {
+            var user_id = $(this).attr('data-user');
             swal({
-                    title: `Kamu yakin akan menghapus user ini?`,
+                    title: `Kamu yakin akan menghapus?`,,
                     text: "Jika iya, data tidak dapat dikembalikan.",
                     icon: "warning",
                     buttons: true,
@@ -284,7 +288,7 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        //form.submit();
+                        $("button#delete_customer-"+user_id).click();
                     }
                 });
         });

@@ -169,12 +169,12 @@
     <script src="{{ asset('assets/js/pages/add_user_dialog.min.js') }}"></script>
     <script type="text/javascript">
 
-        $('#delete_user').click(function(event) {
+        $('button#delete_user').click(function(event) {
             var form =  $(this).closest("form");
             var name = $(this).data("name");
             event.preventDefault();
             swal({
-                title: `Kamu yakin akan menghapus user ini?`,
+                title: `Kamu yakin akan menghapus?`,
                 text: "Jika iya, data tidak dapat dikembalikan.",
                 icon: "warning",
                 buttons: true,
