@@ -218,7 +218,7 @@ class MemberController extends Controller
                     $message = 'Delete Member Success';
                 }else{
                     $status_code = 405;
-                    $message = 'Kamu tidak berhak menghapus';
+                    $message = 'Anda tidak berhak menghapus';
                 }
             }
 

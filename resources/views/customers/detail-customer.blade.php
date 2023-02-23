@@ -280,7 +280,7 @@
         $('a#delete_customer').click(function(event) {
             var user_id = $(this).attr('data-user');
             swal({
-                    title: `Kamu yakin akan menghapus?`,
+                    title: `Anda yakin akan menghapus?`,
                     text: "Jika iya, data tidak dapat dikembalikan.",
                     icon: "warning",
                     buttons: true,

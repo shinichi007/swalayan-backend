@@ -174,7 +174,7 @@
             var name = $(this).data("name");
             event.preventDefault();
             swal({
-                title: `Kamu yakin akan menghapus?`,
+                title: `Anda yakin akan menghapus?`,
                 text: "Jika iya, data tidak dapat dikembalikan.",
                 icon: "warning",
                 buttons: true,
