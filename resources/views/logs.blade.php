@@ -43,6 +43,8 @@
                                                 Login
                                             @elseif(str_contains($audit->url, 'logout') !== false)
                                             Logout
+                                            @elseif(str_contains($audit->url, 'verification') !== false)
+                                            Verifikasi
                                             @else
                                             {{ $audit->event == 'deleted' ? 'Hapus' : ($audit->event == 'updated' ? 'Ubah' : 'Buat') }}
                                             @endif
