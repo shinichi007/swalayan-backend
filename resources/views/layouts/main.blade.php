@@ -188,11 +188,14 @@
                                     Ubah Password
                                 </a>
                                 <div role="separator" class="dropdown-divider"></div>
+                                @if (Auth::user()->role == "admin")
                                 <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout"
                                     data-action="side_overlay_toggle">
                                     <i class="far fa-fw fa-building me-1"></i>
                                     Pengaturan
                                 </a>
+                                    
+                                @endif
                                 <a class="dropdown-item" href="{{ URL('/logout') }}">
                                     <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i>
                                     Logout

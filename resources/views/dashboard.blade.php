@@ -11,7 +11,7 @@
                     {{ $title }}
                 </h1>
                 <p class="fw-medium mb-0 text-muted">
-                    Selamat datang Admin!
+                    Selamat datang {{ Auth::user()->name }}!
                     Anda memiliki
                     <a class="fw-medium" href="/customers">
                         {{ $countPending  }} permintaan
